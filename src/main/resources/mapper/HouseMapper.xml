@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.landlord.dao.HouseMapper">
     <select id="selectOne" resultType="com.qf.landlord.pojo.House">
-        select houseId,aId from house where houseId = 1
+        select * from house where houseId = 1
     </select>
 </mapper>
