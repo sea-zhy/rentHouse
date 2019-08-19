@@ -1,11 +1,17 @@
-package com.qf.landlord.pojo;
+package com.qf.landlord.dto;
 
+import com.qf.landlord.pojo.Contact;
+import com.qf.landlord.pojo.Facilities;
+import com.qf.landlord.pojo.Img;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 @Data
-public class House {
+public class HouseDTO {
     private int houseId;
-    private int aId;
+    private int areaId;
+    private int lanId;
     private String community;
     private int build;
     private int unit;
@@ -15,7 +21,7 @@ public class House {
     private int toilet;
     private int level;
     private int allLevel;
-    private boolean elevator;
+    private String elevator;
     private int area;
     private String type;
     private String decorate;
@@ -26,9 +32,13 @@ public class House {
     private String roomToward;
     private String roommate;
     private int roomArea;
-    private String  title;
+    private String title;
     private String info;
     private int status;
     private long upTime;
+    private Contact contact;
+
+    private List<Img> imgList = new ArrayList<>();
+    private List<Facilities> facilitiesList = new ArrayList<>();
 
 }
