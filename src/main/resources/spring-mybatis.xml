@@ -10,7 +10,6 @@
 
 
     <context:component-scan base-package="com.qf.*.dao"></context:component-scan>
-
     <!-- 1、配置加载数据源参数文件； -->
     <context:property-placeholder location="classpath:mysql.properties" />
     <!-- 2、配置数据源连接池 -->
