@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.landlord.dao.LandlordMapper">
+
+    <!--添加新出租屋及其相关信息-->
+    <insert id="addHouseNew" parameterType="com.qf.landlord.dto.HouseDTO">
+        insert into house(provinceId,cityId,areaId,community,build,unit,num,room,hall,toilet,level,allLevel,elevator,area,housingType,
+        decorate,toward,rent,payType,roomType,roomToward,roomArea,title,info,status,upTime,lanId)
+        values(#{provinceId},#{cityId},#{areaId},#{community},#{build},#{unit},#{num},#{room},#{hall},#{toilet},#{level},#{allLevel},
+        #{elevator},#{area},#{housingType},#{decorate},#{toward},#{rent},#{payType},#{roomType},#{roomToward},
+        #{roomArea},#{title},#{info},#{status},#{upTime},#{lanId})
+        <selectKey keyProperty="houseId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="addHouseFacil" parameterType="com.qf.landlord.dto.HouseDTO">
+        insert into house_facilities(houseId,facId) values
+        <trim suffixOverrides=",">
+            <foreach collection="facilitiesList" item="item">
+                (#{houseId},#{item.facId}),
+            </foreach>
+        </trim>
+    </insert>
+
+    <insert id="addHouseImg" parameterType="com.qf.landlord.dto.HouseDTO">
+        insert into img(img_url,houseId) values
+        <trim suffixOverrides=",">
+            <foreach collection="imgList" item="item">
+                (#{item.img_url},#{houseId}),
+            </foreach>
+        </trim>
+    </insert>
+
+    <insert id="addHouseContact" parameterType="com.qf.landlord.dto.HouseDTO">
+        insert into contact(conName,mobile,houseId) values(#{contact.conName},#{contact.mobile},#{houseId})
+    </insert>
+
+    <!--添加商铺及其相关信息-->
+    <insert id="addShopNew" parameterType="com.qf.landlord.dto.ShopInfoDTO">
+        insert into shopinfo(provinceId,cityId,areaId,title,price,icon,shopType,pay_type,floor,area,info,crowd,business_type,
+        operating_state,specification,property,rentDate,lanId,upTime,status)
+        values(#{provinceId},#{cityId},#{areaId},#{title},#{price},#{icon},#{shopType},#{pay_type},#{floor},#{area},#{info},#{crowd},
+        #{business_type},#{operating_state},#{specification},#{property},#{rentDate},
+        #{lanId},#{upTime},#{status})
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="addShopEquipment" parameterType="com.qf.landlord.dto.ShopInfoDTO">
+        insert into shop_equ(shop_id,equ_id) values
+        <trim suffixOverrides=",">
+            <foreach collection="equipmentList" item="item">
+                (#{id},#{item.id}),
+            </foreach>
+        </trim>
+    </insert>
+
+    <insert id="addShopImg" parameterType="com.qf.landlord.dto.ShopInfoDTO">
+        insert into img(img_url,shopId) values
+        <trim suffixOverrides=",">
+            <foreach collection="imgList" item="item">
+                (#{item.img_url},#{id}),
+            </foreach>
+        </trim>
+    </insert>
+
+    <insert id="addShopContact" parameterType="com.qf.landlord.dto.HouseDTO">
+        insert into contact(conName,mobile,shopId) values(#{contact.conName},#{contact.mobile},#{id})
+    </insert>
+
+    <resultMap id="houseInfoMap" type="com.qf.landlord.dto.HouseDTO">
+        <id property="houseId" column="houseId"></id>
+        <result property="provinceId" column="provinceId"></result>
+        <result property="cityId" column="cityId"></result>
+        <result property="areaId" column="areaId"></result>
+        <result property="community" column="community"></result>
+        <result property="build" column="build"></result>
+        <result property="unit" column="unit"></result>
+        <result property="num" column="num"></result>
+        <result property="room" column="room"></result>
+        <result property="hall" column="hall"></result>
+        <result property="toilet" column="toilet"></result>
+        <result property="level" column="level"></result>
+        <result property="allLevel" column="allLevel"></result>
+        <result property="elevator" column="elevator"></result>
+        <result property="area" column="area"></result>
+        <result property="houseType" column="houseType"></result>
+        <result property="decorate" column="decorate"></result>
+        <result property="toward" column="toward"></result>
+        <result property="rent" column="rent"></result>
+        <result property="payType" column="payType"></result>
+        <result property="roomType" column="roomType"></result>
+        <result property="roomToward" column="roomToward"></result>
+        <result property="roomArea" column="roomArea"></result>
+        <result property="title" column="title"></result>
+        <result property="rent" column="rent"></result>
+        <result property="info" column="info"></result>
+        <result property="status" column="status"></result>
+        <result property="upTime" column="upTime"></result>
+        <result property="lanId" column="lanId"></result>
+        <collection property="imgList" ofType="com.qf.landlord.pojo.Img">
+            <id column="imgId" property="imgId"></id>
+            <result column="img_url" property="img_url"></result>
+        </collection>
+        <collection property="facilitiesList" ofType="com.qf.landlord.pojo.Facilities">
+            <id column="facId" property="facId"></id>
+            <result column="facName" property="facName"></result>
+        </collection>
+    </resultMap>
+    <!--根据商家id查询其发布的出租屋信息-->
+    <select id="getHouseByLandlordId" parameterType="int" resultMap="houseInfoMap">
+        select * from house h,img i,area_info ai,house_facilities hf,facilities f where h.houseId = i.houseId and
+        h.areaId = ai.id and hf.houseId = h.houseId and hf.facId = f.facId and lanId = #{lanId}
+    </select>
+
+
+    <resultMap id="shopInfoMap" type="com.qf.landlord.dto.ShopInfoDTO">
+        <id property="id" column="id"></id>
+        <result property="provinceId" column="provinceId"></result>
+        <result property="cityId" column="cityId"></result>
+        <result property="areaId" column="areaId"></result>
+        <result property="title" column="title"></result>
+        <result property="price" column="price"></result>
+        <result property="icon" column="icon"></result>
+        <result property="shopType" column="shopType"></result>
+        <result property="pay_type" column="pay_type"></result>
+        <result property="floor" column="floor"></result>
+        <result property="area" column="area"></result>
+        <result property="info" column="info"></result>
+        <result property="crowd" column="crowd"></result>
+        <result property="business_type" column="business_type"></result>
+        <result property="operating_state" column="operating_state"></result>
+        <result property="specification" column="specification"></result>
+        <result property="property" column="property"></result>
+        <result property="rentDate" column="rentDate"></result>
+        <result property="lanId" column="lanId"></result>
+        <result property="upTime" column="upTime"></result>
+        <collection property="imgList" ofType="com.qf.landlord.pojo.Img">
+            <id column="imgId" property="imgId"></id>
+            <result column="img_url" property="img_url"></result>
+        </collection>
+        <collection property="equipmentList" ofType="com.qf.landlord.pojo.Equipment">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+        </collection>
+    </resultMap>
+    <!--根据商家id查询其发布的商铺信息-->
+    <select id="getShopByLandlordId" parameterType="int" resultMap="shopInfoMap">
+        select * from shopinfo s,img i,area_info ai,shop_equ se,equipment e where s.id = i.shopId and
+        s.address_id = ai.id and s.id = se.shop_id and e.id = se.equ_id and s.lanId =#{lanId}
+    </select>
+
+
+
+    <!--根据出租屋id查询房屋配套设施 -->
+    <select id="getFacilitiesHouseByHouseId" parameterType="int" resultType="com.qf.landlord.vo.FacilitiesVO">
+        select facName,facId,"1" checked from facilities f where f.facId in (select facId from house_facilities where houseId =#{houseId})
+        union
+        select facName,facId,"0" checked from facilities f where f.facId not in (select facId from house_facilities where houseId =#{houseId})
+    </select>
+
+    <resultMap id="houseInfoAndImgMap" type="com.qf.landlord.vo.HouseVO">
+        <id property="houseId" column="houseId"></id>
+        <result property="provinceId" column="provinceId"></result>
+        <result property="cityId" column="cityId"></result>
+        <result property="areaId" column="areaId"></result>
+        <result property="community" column="community"></result>
+        <result property="build" column="build"></result>
+        <result property="unit" column="unit"></result>
+        <result property="num" column="num"></result>
+        <result property="room" column="room"></result>
+        <result property="hall" column="hall"></result>
+        <result property="toilet" column="toilet"></result>
+        <result property="level" column="level"></result>
+        <result property="allLevel" column="allLevel"></result>
+        <result property="elevator" column="elevator"></result>
+        <result property="area" column="area"></result>
+        <result property="houseType" column="houseType"></result>
+        <result property="decorate" column="decorate"></result>
+        <result property="toward" column="toward"></result>
+        <result property="rent" column="rent"></result>
+        <result property="payType" column="payType"></result>
+        <result property="roomType" column="roomType"></result>
+        <result property="roomToward" column="roomToward"></result>
+        <result property="roomArea" column="roomArea"></result>
+        <result property="title" column="title"></result>
+        <result property="rent" column="rent"></result>
+        <result property="info" column="info"></result>
+        <result property="status" column="status"></result>
+        <result property="upTime" column="upTime"></result>
+        <result property="lanId" column="lanId"></result>
+        <association property="contact" javaType="com.qf.landlord.pojo.Contact">
+            <id property="conId" column="conId"></id>
+            <result property="mobile" column="mobile"></result>
+            <result property="houseId" column="houseId"></result>
+            <result property="conName" column="conName"></result>
+            <result property="shopId" column="shopId"></result>
+        </association>
+        <collection property="imgList" ofType="com.qf.landlord.pojo.Img">
+            <id column="imgId" property="imgId"></id>
+            <result column="img_url" property="img_url"></result>
+        </collection>
+    </resultMap>
+    <!--根据出租屋id查询图片及房屋信息-->
+    <select id="getHouseInfoByHouseId" parameterType="int" resultMap="houseInfoAndImgMap">
+        select * from house h,img i,contact c where h.houseid = i.houseId and h.houseId = c.houseId and
+        h.houseId =#{houseId}
+    </select>
+
+
+    <!--根据shopid查询房屋配套设施 -->
+    <select id="getEquipmentShopById" parameterType="int" resultType="com.qf.landlord.vo.EquipmentVO">
+        select name,id,"1" checked from equipment e where e.id in (select se.equ_id from shop_equ se where
+        se.shop_id =#{shopId})
+        union
+        select name,id,"0" checked from equipment e where e.id not in (select se.equ_id from shop_equ se where
+        se.shop_id =#{shopId})
+    </select>
+
+    <resultMap id="shopInfoAndImgMap" type="com.qf.landlord.vo.ShopInfoVO">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="price" column="price"></result>
+        <result property="icon" column="icon"></result>
+        <result property="shopType" column="shopType"></result>
+        <result property="pay_type" column="pay_type"></result>
+        <result property="floor" column="floor"></result>
+        <result property="area" column="area"></result>
+        <result property="info" column="info"></result>
+        <result property="crowd" column="crowd"></result>
+        <result property="business_type" column="business_type"></result>
+        <result property="operating_state" column="operating_state"></result>
+        <result property="specification" column="specification"></result>
+        <result property="property" column="property"></result>
+        <result property="rentDate" column="rentDate"></result>
+        <result property="provinceId" column="provinceId"></result>
+        <result property="cityId" column="cityId"></result>
+        <result property="areaId" column="areaId"></result>
+        <result property="lanId" column="lanId"></result>
+        <result property="upTime" column="upTime"></result>
+        <association property="contact" javaType="com.qf.landlord.pojo.Contact">
+            <id property="conId" column="conId"></id>
+            <result property="mobile" column="mobile"></result>
+            <result property="houseId" column="houseId"></result>
+            <result property="conName" column="conName"></result>
+            <result property="shopId" column="shopId"></result>
+        </association>
+        <collection property="imgList" ofType="com.qf.landlord.pojo.Img">
+            <id column="imgId" property="imgId"></id>
+            <result column="img_url" property="img_url"></result>
+        </collection>
+    </resultMap>
+    <!--根据shopid查询房屋图片及其详细信息-->
+    <select id="getShopInfoByShopId" parameterType="int" resultMap="shopInfoAndImgMap">
+        select * from shopinfo s,img i,contact c where s.id = i.shopId and s.id = c.shopId and
+        s.id =#{shopId}
+    </select>
+
+
+    <!--根据houseid删除房屋信息-->
+    <delete id="removeHouseByHouseId" parameterType="int">
+        delete from house where houseId = #{houseId}
+    </delete>
+    <delete id="removeHouseContactByHouseId" parameterType="int">
+        delete from contact where houseId =#{houseId}
+    </delete>
+    <delete id="removeHouseImgByHouseId" parameterType="int">
+        delete from img where houseId =#{houseId}
+    </delete>
+    <delete id="removeHouseFacByHouseId" parameterType="int">
+        delete from house_facilities where houseId = #{houseId}
+    </delete>
+
+    <!--根据shopid删除房屋信息-->
+    <delete id="removeShopInfoByShopId" parameterType="int">
+        delete from shopinfo where id=#{shopId}
+    </delete>
+    <delete id="removeShopInfoContactByShopId" parameterType="int">
+        delete from contact where shopId = #{shopId}
+    </delete>
+    <delete id="removeShopInfoImgByShopId" parameterType="int">
+        delete from img where shopId = #{shopId}
+    </delete>
+    <delete id="removeShopInfoEquByShopId" parameterType="int">
+        delete from shop_equ where shop_id = #{shopId}
+    </delete>
+
+    <update id="updateHouseStatusToOne" parameterType="long">
+        update house set status = 1 where uptime &lt; #{time}
+    </update>
+    <update id="updateShopInfoStatusToOne" parameterType="long">
+        update shopinfo set status = 1 where uptime &lt; #{time}
+    </update>
+
+    <!--根据houseid修改出租信息-->
+    <update id="editHouseByHouseId" parameterType="com.qf.landlord.dto.HouseDTO">
+        update house set
+        <trim suffixOverrides=",">
+            <if test="provinceId != null and provinceId !=''">
+                provinceId = #{provinceId},
+            </if>
+            <if test="cityId != null and cityId !=''">
+                cityId = #{cityId},
+            </if>
+            <if test="areaId != null and areaId !=''">
+                areaId = #{areaId},
+            </if>
+            <if test="community != null and community !=''">
+                community = #{community},
+            </if>
+            <if test="build != null and build !=''">
+                build = #{build},
+            </if>
+            <if test="unit != null and unit !=''">
+                unit = #{unit},
+            </if>
+            <if test="num != null and num !=''">
+                num = #{num},
+            </if>
+            <if test="room != null and room !=''">
+                room = #{room},
+            </if>
+            <if test="hall != null and hall !=''">
+                hall = #{hall},
+            </if>
+            <if test="toilet != null and toilet !=''">
+                toilet = #{toilet},
+            </if>
+            <if test="level != null and level !=''">
+                level = #{level},
+            </if>
+            <if test="allLevel != null and allLevel !=''">
+                allLevel = #{allLevel},
+            </if>
+            <if test="elevator != null and elevator !=''">
+                elevator = #{elevator},
+            </if>
+            <if test="area != null and area !=''">
+                area = #{area},
+            </if>
+            <if test="housingType != null and housingType !=''">
+                housingType = #{housingType},
+            </if>
+            <if test="decorate != null and decorate !=''">
+                decorate = #{decorate},
+            </if>
+            <if test="toward != null and toward !=''">
+                toward = #{toward},
+            </if>
+            <if test="rent != null and rent !=''">
+                rent = #{rent},
+            </if>
+            <if test="payType != null and payType !=''">
+                payType = #{payType},
+            </if>
+            <if test="roomType != null and roomType !=''">
+                roomType = #{roomType},
+            </if>
+            <if test="roomToward != null and roomToward !=''">
+                roomToward = #{roomToward},
+            </if>
+            <if test="roommate != null and roommate !=''">
+                roommate = #{roommate},
+            </if>
+            <if test="roomArea != null and roomArea !=''">
+                roomArea = #{roomArea},
+            </if>
+            <if test="title != null and title !=''">
+                title = #{title},
+            </if>
+            <if test="info != null and info !=''">
+                info = #{info},
+            </if>
+        </trim>
+        where houseId = #{houseId}
+    </update>
+
+    <!--根据shopid修改商铺信息-->
+    <update id="editShopInfoByShopId" parameterType="com.qf.landlord.dto.ShopInfoDTO">
+        update shopinfo set
+        <trim suffixOverrides=",">
+            <if test="provinceId !=null and provinceId !=''">
+                provinceId = #{provinceId},
+            </if>
+            <if test="cityId !=null and cityId !=''">
+                cityId = #{cityId},
+            </if>
+            <if test="areaId !=null and areaId !=''">
+                areaId = #{areaId},
+            </if>
+            <if test="title !=null and title !=''">
+                title = #{title},
+            </if>
+            <if test="icon !=null and icon !=''">
+                icon = #{icon},
+            </if>
+            <if test="shopType !=null and shopType !=''">
+                shopType = #{shopType},
+            </if>
+            <if test="pay_type !=null and pay_type !=''">
+                pay_type = #{pay_type},
+            </if>
+            <if test="floor !=null and floor !=''">
+                floor = #{floor},
+            </if>
+            <if test="area !=null and area !=''">
+                area = #{area},
+            </if>
+            <if test="info !=null and info !=''">
+                info = #{info},
+            </if>
+            <if test="crowd !=null and crowd !=''">
+                crowd = #{crowd},
+            </if>
+            <if test="business_type !=null and business_type !=''">
+                business_type = #{business_type},
+            </if>
+            <if test="operating_state !=null and operating_state !=''">
+                operating_state = #{operating_state},
+            </if>
+            <if test="specification !=null and specification !=''">
+                specification = #{specification},
+            </if>
+            <if test="property !=null and property !=''">
+                property = #{property},
+            </if>
+            <if test="rentDate !=null and rentDate !=''">
+                rentDate = #{rentDate},
+            </if>
+            <if test="lanId !=null and lanId !=''">
+                lanId = #{lanId},
+            </if>
+            <if test="upTime !=null and upTime !=''">
+                upTime = #{upTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!--检测商家用户名是否为空-->
+    <select id="getLanByName" parameterType="String" resultType="com.qf.landlord.pojo.Landlord">
+        select * from landlord where lanName = #{lanName}
+    </select>
+
+    <!--注册商家-->
+    <insert id="registerLan" parameterType="com.qf.landlord.pojo.Landlord">
+        insert into landlord(landName,password,landType) values(#{landName},#{password},#{landType})
+    </insert>
+
+    <select id="landlordLoginCheck" parameterType="com.qf.landlord.pojo.Landlord" resultType="com.qf.landlord.pojo.Landlord">
+        select landid,landName,password from landlord where landName = #{landName} and password =#{password}
+    </select>
+
+    <!--完善商家个人信息-->
+    <update id="editLandlord" parameterType="com.qf.landlord.pojo.Landlord">
+        update landlord set
+        <trim suffixOverrides=",">
+            <if test="password !=null and password !=''">
+                password = #{password},
+            </if>
+            <if test="account !=null and account !=''">
+                account = #{account},
+            </if>
+            <if test="email !=null and email !=''">
+                email = #{email},
+            </if>
+            <if test="mobile !=null and mobile !=''">
+                mobile = #{mobile},
+            </if>
+            <if test="icon !=null and icon !=''">
+                icon = #{icon},
+            </if>
+        </trim>
+        where landId = #{landId}
+    </update>
+
+
+</mapper>

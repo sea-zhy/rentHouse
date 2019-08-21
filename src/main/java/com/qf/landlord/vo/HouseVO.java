@@ -1,14 +1,14 @@
-package com.qf.landlord.dto;
+package com.qf.landlord.vo;
 
+import com.qf.landlord.dto.HouseDTO;
 import com.qf.landlord.pojo.Contact;
 import com.qf.landlord.pojo.Facilities;
 import com.qf.landlord.pojo.Img;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 @Data
-public class HouseDTO {
+public class HouseVO {
     private int houseId;
     private String provinceId;
     private String cityId;
@@ -39,14 +39,14 @@ public class HouseDTO {
     private int status;
     private long upTime;
     private Contact contact;
-    private List<Img> imgList = new ArrayList<>();
-    private List<Facilities> facilitiesList = new ArrayList<>();
+    private List<Img> imgList;
+    private List<FacilitiesVO> facilitiesVOList;
 
-    public int getHouseId() {
-        return houseId;
+    public List<FacilitiesVO> getFacilitiesVOList() {
+        return facilitiesVOList;
     }
 
-    public void setHouseId(int houseId) {
-        this.houseId = houseId;
+    public void setFacilitiesVOList(List<FacilitiesVO> facilitiesVOList) {
+        this.facilitiesVOList = facilitiesVOList;
     }
 }

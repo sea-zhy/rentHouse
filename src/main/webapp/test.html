@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>payTest</title>
+</head>
+<body>
+<div id="divId"></div>
+<button onclick="init()"> 按钮</button>
+
+</body>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function init(){
+        $.ajax({
+            type: "Post",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+
+            //请求地址
+            url: "http://localhost:8080/payStart",
+            data:JSON.stringify({
+                "out_trade_no":"15576572",
+                "total_amount":"2222",
+                "subjest":"34333",
+                "body":"234234"
+            }),
+            //请求成功
+            success: function (result) {
+                $("#divId").append(result)
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+
+</script>
+</html>

@@ -1,4 +1,4 @@
-package com.qf.landlord.dto;
+package com.qf.landlord.vo;
 
 import com.qf.landlord.pojo.Contact;
 import com.qf.landlord.pojo.Equipment;
@@ -7,9 +7,8 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Data
-public class ShopInfoDTO {
+public class ShopInfoVO {
     private int id;
     private String provinceId;
     private String cityId;
@@ -30,16 +29,15 @@ public class ShopInfoDTO {
     private String rentDate;
     private int lanId;
     private long upTime;
-    private int status;
     private Contact contact;
     private List<Img> imgList = new ArrayList<>();
-    private List<Equipment> equipmentList = new ArrayList<>();
+    private List<EquipmentVO> equipmentList = new ArrayList<>();
 
-    public int getId() {
-        return id;
+    public List<EquipmentVO> getEquipmentList() {
+        return equipmentList;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEquipmentList(List<EquipmentVO> equipmentList) {
+        this.equipmentList = equipmentList;
     }
 }
