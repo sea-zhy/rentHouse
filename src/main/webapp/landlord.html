@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="gb2312"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex,nofollow">
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Profile.css" type="text/css">
+	<link rel="stylesheet" href="dropzone/basic.min.css" />
+	<link rel="stylesheet" href="dropzone/dropzone.min.css" />
+
+<title>用户中心－系统消息</title>
+</head>
+<body>
+
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+           <a class="ajk-logo" href="#"></a>
+          <i class="split-icon"></i>
+          <a class="sub-logo" href="#">用户中心</a>
+        </div>
+        <a href="" class="quit">
+          <i class="iconfont quitIcon"></i>
+          <span>退出</span>
+        </a>
+    </div>
+</div>
+
+<div class="container">
+	<div class="content clearfix">
+		<!-- 侧边栏 -->
+		<div class="side-menu">
+    	<ul class="menu-list">
+		<li>
+			<a href="#" target="_self"><i class="iconfont"></i>个人信息</a>
+		</li>		
+		<li>
+			<a href="#" target="_self"><i class="iconfont"></i>房源管理</a>
+		</li>
+		<li>
+			<a href="#" target="_self"><i class="iconfont"></i>商铺管理</a>
+		</li>								
+	</ul>	
+</div>
+        <div class="right-content">
+            <div class="right-cont">
+                <ul class="tab-list clearfix">
+					<li>个人信息</li>
+				</ul>
+				
+			<div class="no-msg">
+					<div class="dropzone" id="imgUpload" style="width: 500px;height: 80px;align-content: center">
+					</div>
+				  <ul class="profile-list">
+
+
+					<li class="account">
+					  帐号:
+					  <span class="account">我的账号</span>
+					</li>
+					
+					
+					<li class="email">
+					  邮箱:
+					  <input id="email" value="zhy@qq.com">
+					</li>
+					<li class="phone">
+					  手机:
+					  <input id="mobile" value="1806179772">
+					</li>
+					<li class="password">
+					  <span class="key">新密码:</span>
+					  <input type="password" id="newPawOne">
+					</li>
+					<li class="password">
+					  <span class="key">确认密码:</span>
+					  <input type="password" id="newPawTwo">
+					</li>
+				  </ul>
+				  <button>修改</button>
+				  
+		</div>
+	</div>
+</div>
+		<script>
+			Dropzone.options.imgUpload = {
+						url: "uploadIcon", // 文件提交地址
+						method: "post",  // 也可用put
+						paramName: "dropzFile", // 默认为file
+						maxFiles: 1,// 一次性上传的文件数量上限
+						maxFilesize: 2, // 文件大小，单位：MB
+						acceptedFiles: ".jpg,.gif,.png,.jpeg,.txt,.doc,.docx", // 上传的类型
+						addRemoveLinks: true,
+						parallelUploads: 1,// 一次上传的文件数量
+						//previewsContainer:"#preview", // 上传图片的预览窗口
+						dictDefaultMessage: '拖动文件至此或者点击上传',
+						dictMaxFilesExceeded: "您最多只能上传1个文件！",
+						dictResponseError: '文件上传失败!',
+						dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg,.txt,.doc,.docx。",
+						dictFallbackMessage: "浏览器不受支持",
+						dictFileTooBig: "文件过大上传文件最大支持.",
+						dictRemoveLinks: "删除",
+						dictCancelUpload: "取消",
+						init: function () {
+							this.on("addedfile", function (file) {
+								// 上传文件时触发的事件
+							});
+							this.on("success", function (file, data) {
+								// 上传成功触发的事件
+								console.log(data.imgInfo.result)
+								var strOption;
+								$(data.imgInfo.result).each(function(index,item){
+									strOption +="<option value='"+item.keyword+"'>"+item.keyword+"</option>"
+								})
+								$("#garbageClassify").html(strOption);
+							});
+							this.on("error", function (file, data) {
+								// 上传失败触发的事件
+								console.error();
+							});
+							this.on("removedfile", function (file) {
+								// 删除文件时触发的方法
+							});
+						}
+			}
+		</script>
+</body>
+</html>
+
+
