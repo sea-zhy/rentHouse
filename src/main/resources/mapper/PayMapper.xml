@@ -3,13 +3,22 @@
         PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.landlord.dao.PayMapper">
-
-    <insert id="addOrder" parameterType="com.qf.landlord.pay.PayParam">
-        insert into orderForm(out_trade_no,total_amount,subject,houseId,dayNum)
-        values(#{out_trade_no},#{total_amount},#{subject},#{houseId},#{dayNum})
+    <!--新建订单-->
+    <insert id="addOrder" parameterType="com.qf.landlord.pojo.OrderForm">
+        insert into orderForm(out_trade_no,total_amount,subject,houseId,shopId,createTime,upTime,dayNum,landId)
+        values(#{out_trade_no},#{total_amount},#{subject},#{houseId},#{shopId},#{createTime},#{upTime},#{dayNum},#{landId})
     </insert>
-
-    <select id="getOneOrder" resultType="com.qf.landlord.pay.PayParam" parameterType="int">
-        select * from orderform where ordId = #{ordId}
+    <!--查询订单信息-->
+    <select id="getOrderForm" parameterType="String" resultType="com.qf.landlord.pojo.OrderForm">
+        select * from orderform where out_trade_no = #{out_trade_no}
     </select>
+
+    <!--将房屋置顶-->
+    <update id="editHouseStatus" parameterType="com.qf.landlord.pojo.OrderForm">
+        update house set upTime = #{upTime},status = 2 where houseId = #{houseId}
+    </update>
+    <!--将商铺置顶-->
+    <update id="editShopStatus" parameterType="com.qf.landlord.pojo.OrderForm">
+        update shopinfo set upTime = #{upTime},status = 2 where id = #{shopId}
+    </update>
 </mapper>

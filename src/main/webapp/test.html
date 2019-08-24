@@ -12,20 +12,19 @@
 <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 <script>
     function init(){
+
         $.ajax({
             type: "Post",
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
 
             //请求地址
-            url: "http://localhost:8080/payStart",
+            url: "http://localhost:8080/generateOrder",
             data:JSON.stringify({
-                "out_trade_no":"7089312309",
-                "total_amount":"2222",
+                "out_trade_no":"5234211342343423",
+                "total_amount":"1000",
                 "subjest":"34333",
-                "body":"234234",
-                "houseId":3,
-                "dayNum":5
+                "shopId":9
             }),
             //请求成功
             success: function (result) {

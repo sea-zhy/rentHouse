@@ -1,16 +1,22 @@
 package com.qf.landlord.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qf.landlord.dto.HouseDTO;
 import com.qf.landlord.dto.ShopInfoDTO;
 import com.qf.landlord.pojo.Landlord;
 import com.qf.landlord.service.LandlordService;
+import com.qf.landlord.vo.HouseVO;
+import com.qf.landlord.vo.ShopInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class LandlordController {
@@ -36,29 +42,44 @@ public class LandlordController {
      */
     @RequestMapping("addShopNew")
     public Object addShopNew(@RequestBody ShopInfoDTO shopInfoDTO){
-        System.out.println(shopInfoDTO);
+        System.out.println(shopInfoDTO+"添加新商铺shop");
         return landlordService.addShopNew(shopInfoDTO);
     }
 
     /**
      * 根据商家id 获取出租屋列表
-     * @param lanId
+     * @param
      * @return
      */
     @RequestMapping("getHouseByLandlordId")
-    public Object getHouseByLandlordId(@RequestParam int lanId){
-        System.out.println(lanId);
-        return landlordService.getHouseByLandlordId(lanId);
+    public Object getHouseByLandlordId(@RequestParam(defaultValue="1",required = true,value="pageNum")
+            Integer pageNum){
+        int lanId = 1;
+        Integer pageSize = 4;
+        System.out.println(pageNum);
+        PageHelper.startPage(pageNum,pageSize);
+        List<HouseDTO> houseList = landlordService.getHouseByLanId(lanId);
+        PageInfo<HouseDTO> houseDTOList = new PageInfo<>(houseList);
+        System.out.println(houseDTOList);
+        return houseDTOList;
+        //return landlordService.getHouseByLandlordId(lanId);
     }
 
     /**
      * 根据商家id获取商铺列表
-     * @param lanId
+     * @param
      * @return
      */
     @RequestMapping("getShopByLandlordId")
-    public Object getShopByLandlordId(@RequestParam int lanId){
-        return landlordService.getShopByLandlordId(lanId);
+    public Object getShopByLandlordId(@RequestParam(defaultValue="1",required = true,value="pageNum")
+            Integer pageNum){
+        int lanId = 2;
+        Integer pageSize = 4;
+        PageHelper.startPage(pageNum,pageSize);
+        List<ShopInfoDTO> shopList = landlordService.getShopInfoByLanId(lanId);
+        System.out.println("-----------------------"+shopList);
+        PageInfo<ShopInfoDTO> shopInfoDTOList = new PageInfo<>(shopList);
+        return shopInfoDTOList;
     }
 
     /**
@@ -122,7 +143,7 @@ public class LandlordController {
      */
     @RequestMapping("editShopInfoByShopId")
     public Object editShopInfoByShopId(@RequestBody ShopInfoDTO shopInfoDTO){
-        System.out.println(shopInfoDTO);
+        System.out.println(shopInfoDTO+"修改shopinfo");
         return landlordService.editShopInfoByShopId(shopInfoDTO);
     }
 
@@ -156,7 +177,7 @@ public class LandlordController {
     public Object landlordLoginCheck(@RequestBody Landlord landlord, HttpSession session){
         Landlord lan = landlordService.landlordLoginCheck(landlord);
         if(lan!=null){
-            session.setAttribute("user",lan);
+            session.setAttribute("landlord",lan);
             return true;
         }
         return false;
@@ -169,15 +190,68 @@ public class LandlordController {
      */
     @RequestMapping("editLandlord")
     public Object editLandlord(@RequestBody Landlord landlord){
+        System.out.println("editLandlord");
         return landlordService.editLandlord(landlord);
     }
 
     /**
-     * 支付接口
+     * 获取商家具体信息
+     * @param landId
      * @return
      */
-    @RequestMapping("payBack")
-    public Object payBack(){
-        return null;
+    @RequestMapping("getLanInfo")
+    public Object getLanInfo(@RequestParam int landId){
+        return landlordService.getLanInfo(landId);
     }
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @RequestMapping("loginOut")
+    public Object loginOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("landlord");
+        return true;
+    }
+
+    /**
+     * 修改出租屋地址
+     * @param houseVO
+     * @return
+     */
+    @RequestMapping("editHouseArea")
+    public Object editHouseArea(@RequestBody HouseVO houseVO){
+        return landlordService.editHouseArea(houseVO);
+    }
+    /**
+     * 修改商铺地址
+     * @param shopInfoVO
+     * @return
+     */
+    @RequestMapping("editShopArea")
+    public Object editShopArea(@RequestBody ShopInfoVO shopInfoVO){
+        return landlordService.editShopArea(shopInfoVO);
+    }
+
+    /**
+     * 获取所有的出租屋设备
+     * @return
+     */
+    @RequestMapping("getAllFac")
+    public Object getAllFac(){
+        return landlordService.getAllFac();
+    }
+
+    /**
+     * 根据所有商铺的设备
+     * @return
+     */
+    @RequestMapping("getAllEqu")
+    public Object getAllEqu(){
+        return landlordService.getAllEqu();
+    }
+
+
 }

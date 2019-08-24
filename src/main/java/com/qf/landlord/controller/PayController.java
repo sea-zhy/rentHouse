@@ -1,18 +1,14 @@
 package com.qf.landlord.controller;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.qf.landlord.pay.AlipayConfig;
-import com.qf.landlord.pay.PayParam;
+import com.qf.landlord.pojo.OrderForm;
 import com.qf.landlord.service.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,42 +18,6 @@ import java.util.Map;
 public class PayController {
     @Autowired
     PayService payService;
-    @RequestMapping("payStart")
-    @ResponseBody
-    public Object payStart(@RequestBody PayParam payParam,HttpServletRequest request){
-        request.getSession().setAttribute(payParam.getOut_trade_no(),payParam);
-        //获得初始化的AlipayClient
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
-        //设置请求参数
-        AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-        alipayRequest.setReturnUrl(AlipayConfig.return_url);
-        alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
-        //商户订单号，商户网站订单系统中唯一订单号，必填
-        String out_trade_no = payParam.getOut_trade_no();
-        //付款金额，必填
-        String total_amount = payParam.getTotal_amount();
-        //订单名称，必填
-        String subject = payParam.getSubject();
-        //商品描述，可空
-        String body = payParam.getBody();
-        String result=null;
-        try {
-            alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
-                    + "\"total_amount\":\""+ total_amount +"\","
-                    + "\"subject\":\""+ subject +"\","
-                    + "\"body\":\""+ body +"\","
-                    + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-            //请求
-            result = alipayClient.pageExecute(alipayRequest).getBody();
-            System.out.println(result);
-            //输出 pay页面取出
-            return result;
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @RequestMapping("payResult/return_url")
     public String index(HttpServletRequest request){
@@ -97,30 +57,33 @@ public class PayController {
                 //付款金额
                 String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
                 // 修改订单号的状态
-                int houseId = Integer.parseInt(request.getParameter("houseId")) ;
-                System.out.println(houseId);
 
-                int dayNum = Integer.parseInt(request.getParameter("dayNum"));
-                System.out.println(dayNum);
                 //out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
                 request.setAttribute("reuslt", "trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
-                PayParam payParam = (PayParam) request.getSession().getAttribute(out_trade_no);
-                payService.addOrder(payParam);
+                boolean flg = payService.editUpTimeStatus(out_trade_no);
+                if(flg){
+                    return "landlord";
+                }else{
+                    return "payResult";
+                }
             }else {
                 //out.println("验签失败");
-                request.setAttribute("reuslt", "支付失败");
+                return "payResult";
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return "payResult";
         }
         //——请在这里编写您的程序（以上代码仅作参考）——
-        return "payResult";
-    }
-    @ResponseBody
-    @RequestMapping("addTest")
-    public Object addTest(@RequestBody PayParam payParam){
-        return payService.addOrder(payParam);
+
     }
 
+    @ResponseBody
+    @RequestMapping("generateOrder")
+    public Object generateOrder(@RequestBody OrderForm orderForm){
+        OrderForm orderFormNew = payService.generateOrder(orderForm);
+        String result = payService.payStart(orderFormNew);
+        return result;
+    }
 }

@@ -2,6 +2,8 @@ package com.qf.landlord.dao;
 
 import com.qf.landlord.dto.HouseDTO;
 import com.qf.landlord.dto.ShopInfoDTO;
+import com.qf.landlord.pojo.Equipment;
+import com.qf.landlord.pojo.Facilities;
 import com.qf.landlord.pojo.Landlord;
 import com.qf.landlord.vo.EquipmentVO;
 import com.qf.landlord.vo.FacilitiesVO;
@@ -51,4 +53,14 @@ public interface LandlordMapper {
     int registerLan(Landlord landlord);
     Landlord landlordLoginCheck(Landlord landlord);
     int editLandlord(Landlord landlord);
+
+    Landlord getLanInfo(int landid);
+    int editHouseArea(HouseVO houseVO);
+    int editShopArea(ShopInfoVO shopInfoVO);
+
+    List<Facilities> getAllFac();
+    List<Equipment> getAllEqu();
+
+    List<HouseDTO> getHouseByLanId(int lanId);
+    List<ShopInfoDTO> getShopInfoByLanId(int lanId);
 }

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="gb2312"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex,nofollow">
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Profile.css" type="text/css">
+	<link rel="stylesheet" href="dropzone/basic.min.css" />
+	<link rel="stylesheet" href="dropzone/dropzone.min.css" />
+	<script src="dropzone/dropzone.min.js"></script>
+<title>用户中心－系统消息</title>
+	<style>
+		img{
+			width:50px;
+		}
+		li{
+			display:inline-block;
+		}
+		table a{
+			display:block;
+			margin:15px;
+		}
+	</style>
+</head>
+<body>
+
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+           <a class="ajk-logo" href="#"></a>
+          <i class="split-icon"></i>
+          <a class="sub-logo" href="#">用户中心</a>
+        </div>
+        <a href="" class="quit">
+          <i class="iconfont quitIcon"></i>
+          <span onclick="loginOut()">退出</span>
+        </a>
+    </div>
+</div>
+
+<div class="headerSub-mod">
+	<div class="headerSub clearfix">
+
+		<div class="user-info">
+			<div class="info-sup clearfix">
+			</div>
+			<div class="info-sub clearfix">
+				<ul>
+					<li class="user-account">
+
+					</li>
+					<i class="split-icon"></i>
+					<li class="user-type">
+						<span id="landType"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="content clearfix">
+		<!-- 侧边栏 -->
+		<div class="side-menu">
+    	<ul class="menu-list">
+		<li>
+			<a href="landlord.html" target="_self"><i class="iconfont"></i>个人信息</a>
+		</li>
+		<li>
+			<a href="houseList.html" target="_self"><i class="iconfont"></i>房源管理</a>
+		</li>
+		<li>
+			<a href="shopList.html" target="_self"><i class="iconfont"></i>商铺管理</a>
+		</li>								
+	</ul>	
+		</div>
+		<div class="right-content">
+			<div class="right-cont">
+				<ul class="tab-list clearfix">
+					<li onclick="addShop()">发布新房源</li>
+				</ul>
+			<div class="no-msg">
+				<br/><br/><br/>
+				<div>
+					<table id="houseTable" border="1" cellpadding="0" cellspacing="0" align="center" width="900px">
+						<thead>
+							<tr>
+								<td>标题</td>
+								<td>类型</td>
+								<td>楼层</td>
+								<td>起租时间</td>
+								<td>租金</td>
+								<td>介绍</td>
+								<td>操作</td>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+
+						<tfoot></tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+</div>
+
+
+
+
+
+
+
+</div>
+</div>
+</body>
+		<script>
+
+			function init(){
+				var pageNum = window.location.search.split("=").pop();
+				if(pageNum == ""){
+					pageNum=1;
+				}
+				var url = "getShopByLandlordId?pageNum=";
+				url += pageNum;
+				$.ajax({
+					type: "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: url,
+					//请求成功
+					success: function (result) {
+						console.log(result);
+						$(result.list).each(function(index,item){
+							var houseStr;
+							houseStr += "<tr>";
+							houseStr += "<td>"+item.title+"</td>";
+							houseStr += "<td>"+item.shopType+"</td>";
+							houseStr += "<td>"+item.floor+"</td>";
+							houseStr += "<td>"+item.rentDate+"</td>";
+							houseStr += "<td>"+item.price+"</td>";
+							houseStr += "<td>"+item.info+"</td>";
+							houseStr += "<td> ";
+							houseStr +=	 "<button onclick='removeShop("+item.id+")'>删除</button>&ensp;|&ensp;";
+							houseStr +=	 "<button onclick='editShop("+item.id+")'>修改</button>&ensp;|&ensp;" ;
+							houseStr +=	 "<button onclick='toUp("+item.id+")'>设置推荐</button>&ensp;&ensp;" ;
+							houseStr +=	 "</td>";
+							houseStr += "</tr>";
+							$("#houseTable tbody").append(houseStr);
+						})
+						var pageStr = "<tr><td colspan='7'>"
+						if(pageNum<=1||pageNum==""){
+							pageStr += "<li><a href=\"shopList.html?pageNum=1\">上一页</a></li>";
+						}else{
+							pageStr += "<li><a href=\"shopList.html?pageNum="+(pageNum-1)+"\">上一页</a></li>";
+						}
+						for(var i=1;i<=result.pages;i++){
+							pageStr += "<li><a href=\"shopList.html?pageNum="+i+"\">"+i+"</a></li>";
+						}
+						if(pageNum>=result.pages){
+							pageStr += "<li ><a href=\"shopList.html?pageNum="+result.pages+"\">下一页</a></li>";
+						}else{
+							pageStr += "<li><a href=\"shopList.html?pageNum="+(parseInt(pageNum)+1)+"\">下一页</a></li>";
+						}
+						pageStr += "</td></tr>"
+						$("#houseTable tfoot").html("");
+						$("#houseTable tfoot").append(pageStr);
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			}
+			init();
+
+
+
+
+			function removeShop(shopId){
+				$.ajax({
+					type: "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: "http://localhost:8080/removeShopInfo?shopId="+shopId,
+					//请求成功
+					success: function (result) {
+						window.location.reload();
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			}
+			function editShop(shopId){
+				window.location.href="shopInfo.html?shopId="+shopId;
+			}
+			function addShop(){
+				window.location.href="shopInfo.html";
+			}
+		</script>
+
+</html>
+
+

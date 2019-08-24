@@ -15,7 +15,7 @@ public class ShopInfoDTO {
     private String cityId;
     private String areaId;
     private String title;
-    private String price;
+    private int price;
     private String icon;
     private String shopType;
     private String pay_type;

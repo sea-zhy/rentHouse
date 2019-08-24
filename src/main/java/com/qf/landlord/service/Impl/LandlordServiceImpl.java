@@ -3,6 +3,8 @@ package com.qf.landlord.service.Impl;
 import com.qf.landlord.dao.LandlordMapper;
 import com.qf.landlord.dto.HouseDTO;
 import com.qf.landlord.dto.ShopInfoDTO;
+import com.qf.landlord.pojo.Equipment;
+import com.qf.landlord.pojo.Facilities;
 import com.qf.landlord.pojo.Landlord;
 import com.qf.landlord.service.LandlordService;
 import com.qf.landlord.tool.MD5;
@@ -91,11 +93,9 @@ public class LandlordServiceImpl implements LandlordService {
     @Override
     public ShopInfoVO getShopById(int shopId) {
         List<EquipmentVO> equipmentVOList = landlordMapper.getEquipmentShopById(shopId);
-        System.out.println(equipmentVOList);
         ShopInfoVO shopInfoVO = landlordMapper.getShopInfoByShopId(shopId);
         shopInfoVO.setEquipmentList(equipmentVOList);
-        System.out.println(shopInfoVO);
-        return null;
+        return shopInfoVO;
     }
 
     /**
@@ -181,8 +181,45 @@ public class LandlordServiceImpl implements LandlordService {
 
     @Override
     public boolean editLandlord(Landlord landlord) {
-        landlord.setPassword(MD5.getNewString(landlord.getPassword()));
+        if(landlord.getPassword()!=null&&landlord.getPassword()!=""){
+            landlord.setPassword(MD5.getNewString(landlord.getPassword()));
+        }
         return landlordMapper.editLandlord(landlord)>0;
+    }
+
+    @Override
+    public Landlord getLanInfo(int landid) {
+        return landlordMapper.getLanInfo(landid);
+    }
+
+    @Override
+    public boolean editHouseArea(HouseVO houseVO) {
+        return landlordMapper.editHouseArea(houseVO)>0;
+    }
+
+    @Override
+    public boolean editShopArea(ShopInfoVO shopInfoVO) {
+        return landlordMapper.editShopArea(shopInfoVO)>0;
+    }
+
+    @Override
+    public List<Facilities> getAllFac() {
+        return landlordMapper.getAllFac();
+    }
+
+    @Override
+    public List<Equipment> getAllEqu() {
+        return landlordMapper.getAllEqu();
+    }
+
+    @Override
+    public List<HouseDTO> getHouseByLanId(int lanId) {
+        return landlordMapper.getHouseByLanId(lanId);
+    }
+
+    @Override
+    public List<ShopInfoDTO> getShopInfoByLanId(int lanId) {
+        return landlordMapper.getShopInfoByLanId(lanId);
     }
 
 }

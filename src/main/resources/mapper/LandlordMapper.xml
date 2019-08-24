@@ -7,10 +7,10 @@
     <!--添加新出租屋及其相关信息-->
     <insert id="addHouseNew" parameterType="com.qf.landlord.dto.HouseDTO">
         insert into house(provinceId,cityId,areaId,community,build,unit,num,room,hall,toilet,level,allLevel,elevator,area,housingType,
-        decorate,toward,rent,payType,roomType,roomToward,roomArea,title,info,status,upTime,lanId)
+        decorate,toward,rent,payType,roomType,roomToward,roomArea,title,info,upTime,lanId)
         values(#{provinceId},#{cityId},#{areaId},#{community},#{build},#{unit},#{num},#{room},#{hall},#{toilet},#{level},#{allLevel},
         #{elevator},#{area},#{housingType},#{decorate},#{toward},#{rent},#{payType},#{roomType},#{roomToward},
-        #{roomArea},#{title},#{info},#{status},#{upTime},#{lanId})
+        #{roomArea},#{title},#{info},#{upTime},#{lanId})
         <selectKey keyProperty="houseId" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -41,10 +41,10 @@
     <!--添加商铺及其相关信息-->
     <insert id="addShopNew" parameterType="com.qf.landlord.dto.ShopInfoDTO">
         insert into shopinfo(provinceId,cityId,areaId,title,price,icon,shopType,pay_type,floor,area,info,crowd,business_type,
-        operating_state,specification,property,rentDate,lanId,upTime,status)
+        operating_state,specification,property,rentDate,lanId,upTime)
         values(#{provinceId},#{cityId},#{areaId},#{title},#{price},#{icon},#{shopType},#{pay_type},#{floor},#{area},#{info},#{crowd},
         #{business_type},#{operating_state},#{specification},#{property},#{rentDate},
-        #{lanId},#{upTime},#{status})
+        #{lanId},#{upTime})
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -113,8 +113,8 @@
     </resultMap>
     <!--根据商家id查询其发布的出租屋信息-->
     <select id="getHouseByLandlordId" parameterType="int" resultMap="houseInfoMap">
-        select * from house h,img i,area_info ai,house_facilities hf,facilities f where h.houseId = i.houseId and
-        h.areaId = ai.id and hf.houseId = h.houseId and hf.facId = f.facId and lanId = #{lanId}
+         select * from house h,img i,house_facilities hf,facilities f where h.houseId = i.houseId and
+         hf.houseId = h.houseId and hf.facId = f.facId and lanId = #{lanId}
     </select>
 
 
@@ -150,8 +150,8 @@
     </resultMap>
     <!--根据商家id查询其发布的商铺信息-->
     <select id="getShopByLandlordId" parameterType="int" resultMap="shopInfoMap">
-        select * from shopinfo s,img i,area_info ai,shop_equ se,equipment e where s.id = i.shopId and
-        s.address_id = ai.id and s.id = se.shop_id and e.id = se.equ_id and s.lanId =#{lanId}
+        select * from shopinfo s,img i,shop_equ se,equipment e where s.id = i.shopId and
+         s.id = se.shop_id and e.id = se.equ_id and s.lanId =#{lanId}
     </select>
 
 
@@ -479,4 +479,35 @@
     </update>
 
 
+    <!--查询商家信息-->
+    <select id="getLanInfo" parameterType="int" resultType="com.qf.landlord.pojo.Landlord">
+        select * from landlord where landid = #{landid}
+    </select>
+
+    <!--修改房屋地址-->
+    <update id="editHouseArea" parameterType="com.qf.landlord.vo.HouseVO">
+        update house set provinceId=#{provinceId},cityId=#{cityId},areaId=#{areaId} where houseId = #{houseId}
+    </update>
+    <update id="editShopArea" parameterType="com.qf.landlord.vo.ShopInfoVO">
+        update shopinfo set provinceId=#{provinceId},cityId=#{cityId},areaId=#{areaId} where id = #{id}
+    </update>
+
+
+    <select id="getAllFac" resultType="com.qf.landlord.pojo.Facilities">
+        select * from facilities
+    </select>
+
+    <!--根据lanid查询所有的house-->
+    <select id="getHouseByLanId" parameterType="int" resultMap="houseInfoMap">
+        select * from house where lanId = #{lanId}
+    </select>
+
+    <!--根据lanid查询所有shop-->
+    <select id="getShopInfoByLanId" parameterType="int" resultMap="shopInfoMap">
+        select * from shopinfo where lanId = #{lanId}
+    </select>
+
+    <select id="getAllEqu" resultType="com.qf.landlord.pojo.Equipment">
+        select * from equipment
+    </select>
 </mapper>

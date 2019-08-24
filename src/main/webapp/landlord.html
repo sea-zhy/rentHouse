@@ -7,7 +7,7 @@
 	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Profile.css" type="text/css">
 	<link rel="stylesheet" href="dropzone/basic.min.css" />
 	<link rel="stylesheet" href="dropzone/dropzone.min.css" />
-
+	<script src="dropzone/dropzone.min.js"></script>
 <title>用户中心－系统消息</title>
 </head>
 <body>
@@ -21,10 +21,36 @@
         </div>
         <a href="" class="quit">
           <i class="iconfont quitIcon"></i>
-          <span>退出</span>
+          <span onclick="loginOut()">退出</span>
         </a>
     </div>
 </div>
+
+<div class="headerSub-mod">
+	<div class="headerSub clearfix">
+		<img src="" class="user-photo" alt="用户头像" id="icon">
+		<div class="user-info">
+			<div class="info-sup clearfix">
+
+
+			</div>
+			<div class="info-sub clearfix">
+				<ul>
+					<li class="user-account">
+						账户名：<span id="account"></span>
+					</li>
+					<i class="split-icon"></i>
+					<li class="user-type">
+						<span id="landType"></span>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>
+
 
 <div class="container">
 	<div class="content clearfix">
@@ -32,13 +58,13 @@
 		<div class="side-menu">
     	<ul class="menu-list">
 		<li>
-			<a href="#" target="_self"><i class="iconfont"></i>个人信息</a>
-		</li>		
-		<li>
-			<a href="#" target="_self"><i class="iconfont"></i>房源管理</a>
+			<a href="landlord.html" target="_self"><i class="iconfont"></i>个人信息</a>
 		</li>
 		<li>
-			<a href="#" target="_self"><i class="iconfont"></i>商铺管理</a>
+			<a href="houseList.html" target="_self"><i class="iconfont"></i>房源管理</a>
+		</li>
+		<li>
+			<a href="shopList.html" target="_self"><i class="iconfont"></i>商铺管理</a>
 		</li>								
 	</ul>	
 </div>
@@ -49,17 +75,17 @@
 				</ul>
 				
 			<div class="no-msg">
-					<div class="dropzone" id="imgUpload" style="width: 500px;height: 80px;align-content: center">
-					</div>
+
+				<div class="dropzone" id="imgUpload" style="width: 200px;margin: 0 auto">
+				</div>
+				<input type="hidden" id="iconImg">
+
+
 				  <ul class="profile-list">
 
+					  <br/><br/><br/><br/>
 
-					<li class="account">
-					  帐号:
-					  <span class="account">我的账号</span>
-					</li>
-					
-					
+					<input type="hidden" id="relIcon">
 					<li class="email">
 					  邮箱:
 					  <input id="email" value="zhy@qq.com">
@@ -76,55 +102,134 @@
 					  <span class="key">确认密码:</span>
 					  <input type="password" id="newPawTwo">
 					</li>
+
 				  </ul>
-				  <button>修改</button>
+				  <button onclick="changeLandInfo()">修改</button>
 				  
 		</div>
 	</div>
 </div>
+	</div>
+</div>
+</body>
 		<script>
 			Dropzone.options.imgUpload = {
-						url: "uploadIcon", // 文件提交地址
-						method: "post",  // 也可用put
-						paramName: "dropzFile", // 默认为file
-						maxFiles: 1,// 一次性上传的文件数量上限
-						maxFilesize: 2, // 文件大小，单位：MB
-						acceptedFiles: ".jpg,.gif,.png,.jpeg,.txt,.doc,.docx", // 上传的类型
-						addRemoveLinks: true,
-						parallelUploads: 1,// 一次上传的文件数量
-						//previewsContainer:"#preview", // 上传图片的预览窗口
-						dictDefaultMessage: '拖动文件至此或者点击上传',
-						dictMaxFilesExceeded: "您最多只能上传1个文件！",
-						dictResponseError: '文件上传失败!',
-						dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg,.txt,.doc,.docx。",
-						dictFallbackMessage: "浏览器不受支持",
-						dictFileTooBig: "文件过大上传文件最大支持.",
-						dictRemoveLinks: "删除",
-						dictCancelUpload: "取消",
-						init: function () {
-							this.on("addedfile", function (file) {
-								// 上传文件时触发的事件
-							});
-							this.on("success", function (file, data) {
-								// 上传成功触发的事件
-								console.log(data.imgInfo.result)
-								var strOption;
-								$(data.imgInfo.result).each(function(index,item){
-									strOption +="<option value='"+item.keyword+"'>"+item.keyword+"</option>"
-								})
-								$("#garbageClassify").html(strOption);
-							});
-							this.on("error", function (file, data) {
-								// 上传失败触发的事件
-								console.error();
-							});
-							this.on("removedfile", function (file) {
-								// 删除文件时触发的方法
-							});
-						}
+				url: "uploadIcon", // 文件提交地址
+				method: "post",  // 也可用put
+				paramName: "dropzFile", // 默认为file
+				maxFiles: 1,// 一次性上传的文件数量上限
+				maxFilesize: 2, // 文件大小，单位：MB
+				acceptedFiles: ".jpg,.gif,.png,.jpeg,.txt,.doc,.docx", // 上传的类型
+				addRemoveLinks: true,
+				parallelUploads: 1,// 一次上传的文件数量
+				//previewsContainer:"#preview", // 上传图片的预览窗口
+				dictDefaultMessage: '跟换头像',
+				dictMaxFilesExceeded: "您最多只能上传1个文件！",
+				dictResponseError: '文件上传失败!',
+				dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg,.txt,.doc,.docx。",
+				dictFallbackMessage: "浏览器不受支持",
+				dictFileTooBig: "文件过大上传文件最大支持.",
+				dictRemoveLinks: "删除",
+				dictCancelUpload: "取消",
+				init: function () {
+					this.on("addedfile", function (file) {
+						// 上传文件时触发的事件
+					});
+					this.on("success", function (file, data) {
+						// 上传成功触发的事件
+						$("#icon").attr("src",data.fileName);
+						$("#iconImg").val(data.fileName);
+					});
+					this.on("error", function (file, data) {
+						// 上传失败触发的事件
+						console.error();
+					});
+					this.on("removedfile", function (file) {
+						// 删除文件时触发的方法
+					});
+				}
+			}
+			function init(){
+				$.ajax({
+					type: "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: "http://localhost:8080/getLanInfo?landId="+1,
+					//请求成功
+					success: function (result) {
+						console.log(result);
+						$("#account").text(result.account);
+						$("#email").val(result.email);
+						$("#mobile").val(result.mobile);
+						$("#landType").val(result.landType);
+						$("#icon").attr("src",result.icon);
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			}
+			init();
+			function changeLandInfo(){
+				if($("#newPawOne").val()!=$("#newPawTwo").val()){
+					alert("两次密码不一致");
+					return;
+				}
+				$.ajax({
+					type: "POST",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: "http://localhost:8080/editLandlord",
+					//请求成功
+					data:JSON.stringify({
+						"landId":1,
+						"password":$("#newPawOne").val(),
+						"account":$("#account").val(),
+						"email":$("#email").val(),
+						"mobile":$("#mobile").val(),
+						"icon":$("#iconImg").val()
+					}),
+					success: function (result) {
+						alert("修改成功");
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						alert("修改失败");
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			}
+			function loginOut(){
+				$.ajax({
+					type: "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: "http://localhost:8080/loginOut",
+					//请求成功
+					success: function (result) {
+						alert("success");
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
 			}
 		</script>
-</body>
+
 </html>
 
 
