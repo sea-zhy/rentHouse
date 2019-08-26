@@ -148,7 +148,11 @@
 							houseStr += "<td> ";
 							houseStr +=	 "<button onclick='removeShop("+item.id+")'>删除</button>&ensp;|&ensp;";
 							houseStr +=	 "<button onclick='editShop("+item.id+")'>修改</button>&ensp;|&ensp;" ;
-							houseStr +=	 "<button onclick='toUp("+item.id+")'>设置推荐</button>&ensp;&ensp;" ;
+							if(item.status!=2){
+								houseStr +=	 "<button onclick='toUp("+item.id+")'>设置推荐</button>&ensp;&ensp;" ;
+							}else{
+								houseStr +=	 "<button>已为推荐</button>&ensp;&ensp;" ;
+							}
 							houseStr +=	 "</td>";
 							houseStr += "</tr>";
 							$("#houseTable tbody").append(houseStr);
@@ -208,6 +212,9 @@
 			}
 			function addShop(){
 				window.location.href="shopInfo.html";
+			}
+			function toUp(shopId){
+				window.location.href="shopInfoToUp.html?shopId="+shopId;
 			}
 		</script>
 

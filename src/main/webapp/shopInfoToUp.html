@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="gb2312"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex,nofollow">
+	<script src="jquery/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+	<link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Profile.css" type="text/css">
+	<link rel="stylesheet" href="dropzone/basic.min.css" />
+	<link rel="stylesheet" href="dropzone/dropzone.min.css" />
+	<script src="dropzone/dropzone.min.js"></script>
+	<script type="text/javascript" src="js/plugins/citypicker/distpicker.data.js"></script>
+	<script type="text/javascript" src="js/plugins/citypicker/distpicker.js"></script>
+<title>用户中心－系统消息</title>
+	<style>
+		img{
+			width:50px;
+		}
+		input{
+			width:50px;
+		}
+		td{
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+           <a class="ajk-logo" href="#"></a>
+          <i class="split-icon"></i>
+          <a class="sub-logo" href="#">用户中心</a>
+        </div>
+        <a href="" class="quit">
+          <i class="iconfont quitIcon"></i>
+          <span onclick="loginOut()">退出</span>
+        </a>
+    </div>
+</div>
+
+<div class="headerSub-mod">
+	<div class="headerSub clearfix">
+
+		<div class="user-info">
+			<div class="info-sup clearfix">
+			</div>
+			<div class="info-sub clearfix">
+				<ul>
+					<li class="user-account">
+
+					</li>
+					<i class="split-icon"></i>
+					<li class="user-type">
+						<span id="landType"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="content clearfix">
+		<!-- 侧边栏 -->
+		<div class="side-menu">
+    	<ul class="menu-list">
+		<li>
+			<a href="landlord.html" target="_self"><i class="iconfont"></i>个人信息</a>
+		</li>
+		<li>
+			<a href="houseList.html" target="_self"><i class="iconfont"></i>房源管理</a>
+		</li>
+		<li>
+			<a href="shopList.html" target="_self"><i class="iconfont"></i>商铺管理</a>
+		</li>								
+	</ul>	
+		</div>
+		<div class="right-content">
+			<div class="right-cont">
+				<ul class="tab-list clearfix">
+					<li onclick="">房屋发布/修改</li>
+				</ul>
+			<div class="no-msg">
+				<br/><br/><br/>
+				<div>
+					<table id="houseTable" border="1" cellpadding="0" cellspacing="0" align="center" width="750px">
+
+						<tr>
+							<td>所在地：<span id="areaInfo"></span></td>
+							<td colspan="2">
+								<div class="control-group">
+									<div class="controls">
+										<div data-toggle="distpicker">
+
+											<div class="form-group area" style=" float:left;">
+												<select class="form-control" id="province1"></select>
+											</div>
+											<div class="form-group area" style=" float:left;">
+												<select class="form-control" id="city1"></select>
+											</div>
+											<div class="form-group area" style=" float:left;">
+												<select class="form-control" id="district1"></select>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+							商业类型:<input id="business_type">
+							</td>
+							<td>
+								起租时间:<select id="rentDate">
+											<option value="半年起租">半年起租</option>
+											<option value="一年起租">一年起租</option>
+											<option value="三年起租">三年起租</option>
+											<option value="其它">其它</option>
+										</select>
+							</td>
+							<td>
+								楼层:<input id="floor">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								面积:<input id="area">
+							</td>
+							<td>
+								租金:<input id="price">
+								付款方式:<select id="pay_type">
+											<option value="押一付一">押一付一</option>
+											<option value="押一付三">押一付三</option>
+											<option value="半年一付">半年一付</option>
+											<option value="一年一付">一年一付</option>
+										</select>
+							</td>
+							<td>
+								物业:<input id="property">
+							</td>
+						</tr>
+
+
+
+						<tr >
+							<td id="equipment" colspan="3">
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="3">
+								联系人:<input id="contactName">
+								电  话:<input id="conMobile">
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="3" id="shopImg">
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="3">
+								<div class="dropzone" id="imgUpload" style="width: 200px;margin: 0 auto">
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="3">
+								标题:<input id="title"style="width: 500px">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								房屋简介:<br/>
+								<textarea cols="50" rows="20" id="info"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								请选择置顶天数:
+								<input class="toUpTime" type="radio" value="1">一天(40)
+								<input class="toUpTime" type="radio" value="2">三天(100)
+								<input class="toUpTime" type="radio" value="3">一周(200)
+								<input class="toUpTime" type="radio" value="4">一个月(750)
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<button onclick="toUp()">设置置顶</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+</div>
+</body>
+		<script>
+			var shopId = window.location.search.split("=").pop();
+			var landId;
+			var subject;
+			$("#province1").bind("change",
+					function(){
+						var province=$("#province1").val();
+					}
+			);
+
+
+			function init(){
+					$.ajax({
+						type: "GET",
+						//请求的媒体类型
+						contentType: "application/json;charset=UTF-8",
+						//返回数据格式
+						dataType: "json",
+						//请求地址
+						url: "http://localhost:8080/getEquipmentShopById?shopId="+shopId,
+						//请求成功
+						success: function (result) {
+							console.log(result);
+							landId = result.id;
+							subject= result.title;
+							$("#areaInfo").text(result.provinceId+result.cityId+result.areaId);
+							$("#business_type").val(result.business_type);
+							$("#rentDate").val(result.rentDate);
+							$("#floor").val(result.floor);
+							$("#area").val(result.area);
+							$("#price").val(result.price);
+							$("#pay_type").val(result.pay_type);
+							$("#property").val(result.property);
+							$("#contactName").val(result.contact.conName);
+							$("#conMobile").val(result.contact.mobile);
+							$("#title").val(result.title);
+							$("#info").text(result.info);
+							var str = "配套设施";
+							$(result.equipmentList).each(function(index,item){
+								if(item.checked==true){
+									str += "<input type='checkbox' checked='checked' value='"+item.id+"'>"+item.name;
+								}else{
+									str += "<input type='checkbox'value='"+item.id+"'>"+item.name;
+								}
+							})
+							$("#equipment").html(str);
+
+							if(result.imgList!=null){
+								var strImg = "商铺图片";
+								$(result.imgList).each(function(index,item){
+									strImg += "<img src="+item.img_url+">"
+								})
+								$("#shopImg").append(strImg)
+							}
+						},
+						//请求失败，包含具体的错误信息
+						error: function (e) {
+							console.log(e.status);
+							console.log(e.responseText);
+						}
+					})
+			}
+			init();
+			function toUp(){
+				var upType = $("input:radio:checked").val();
+				var dayNum;
+				var total_amount;
+				if(upType == 1){
+					dayNum = 1;
+					total_amount=40;
+				}else if(upType == 2){
+					dayNum = 3;
+					total_amount=100;
+				}else if(upType == 3){
+					dayNum = 7;
+					total_amount=200;
+				}else if(upType == 4){
+					dayNum = 30;
+					total_amount=750;
+				}
+				alert(dayNum);
+				alert(total_amount)
+				$.ajax({
+					type: "Post",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+
+					//请求地址
+					data:JSON.stringify({
+						"dayNum":dayNum,
+						"total_amount":total_amount,
+						"shopId":shopId,
+						"landId":landId,
+						"subject":subject
+					}),
+					url: "http://localhost:8080/generateOrder",
+					success: function (result) {
+						console.log(result);
+						$("#houseTable").html("");
+						$("#houseTable").append(result);
+					},
+					error:function (e){
+						alert("置顶失败");
+					},
+				})
+			}
+
+
+		</script>
+
+</html>
+
+
