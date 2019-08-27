@@ -246,7 +246,6 @@
 						url: "http://localhost:8080/getEquipmentShopById?shopId="+shopId,
 						//请求成功
 						success: function (result) {
-							console.log(result);
 							$("#areaInfo").text(result.provinceId+result.cityId+result.areaId);
 							$("#business_type").val(result.business_type);
 							$("#rentDate").val(result.rentDate);
@@ -306,7 +305,6 @@
 					//请求成功
 					success: function (result) {
 						window.location.reload();
-
 					},
 					//请求失败，包含具体的错误信息
 					error: function (e) {

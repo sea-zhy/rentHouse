@@ -287,13 +287,10 @@
 					dayNum = 30;
 					total_amount=750;
 				}
-				alert(dayNum);
-				alert(total_amount)
 				$.ajax({
 					type: "Post",
 					//请求的媒体类型
 					contentType: "application/json;charset=UTF-8",
-
 					//请求地址
 					data:JSON.stringify({
 						"dayNum":dayNum,
@@ -304,7 +301,6 @@
 					}),
 					url: "http://localhost:8080/generateOrder",
 					success: function (result) {
-						console.log(result);
 						$("#houseTable").html("");
 						$("#houseTable").append(result);
 					},
