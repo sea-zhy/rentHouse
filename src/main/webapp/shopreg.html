@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="GB18030">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="dropzone/basic.min.css" />
+    <link rel="stylesheet" href="dropzone/dropzone.min.css" />
+    <script src="dropzone/dropzone.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body background="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566380319610&di=60835a88bd02d1dc24a9cb991702de00&imgtype=0&src=http%3A%2F%2F01imgmini.eastday.com%2Fmobile%2F20180926%2F20180926130534_6810fede801415cb68336709e212a0af_4.png">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" href="index.html" style="font-size:32px;">百姓安居网</a></div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 商家注册</h2>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="landName" placeholder="请输入用户名" autofocus onblur="checkusername()">
+            <!--<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
+        </div>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="password" placeholder="请输入登录密码" style="margin-top:10px;">
+
+        </div>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="account" placeholder="请输入账号" style="margin-top:10px;">
+        </div>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="email" placeholder="请输入邮箱地址" style="margin-top:10px;">
+            <span class=" glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="input-group">
+                <a class="input-group-addon" type="button" >
+                    <button class="glyphicon glyphicon-search" onclick="get()" id="code_tel" value=" 获取验证码">
+                        获取验证码
+                    </button>
+                </a>
+                <input class="form-control has-success " id="getcode" type="text" placeholder="请输入验证码" >
+            </div>
+        </div>
+
+
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="mobile" placeholder="请输入移动电话" style="margin-top:10px;">
+
+        </div>
+
+        <div class="form-group has-success has-feedback">
+
+            <div id="dropzoneDiv" class="dropzone"></div>
+            <input type="hidden" id="imgUrl" class="form-control"/>
+        </div>
+        <div class="form-group has-success has-feedback">
+            <select  class="form-control" id="landType" placeholder="请输入商家类别" style="margin-top:10px;">
+                <option value="0">请输入用户状态</option>
+                <option value="个人">个人</option>
+                <option value="中介">中介</option>
+            </select>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <a href="shopreg.html">重置</a>
+            </label>
+            <label style="float:right">
+                <a href="shoplogin.html">我有账号</a>
+            </label>
+        </div>
+        <a class="btn btn-lg btn-success btn-block" onclick="registerUser()"> 注册</a>
+    </form>
+</div>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+    Dropzone.options.dropzoneDiv = {
+        url: "fileUpAndDown/upload", // 文件提交地址
+        method: "post",  // 也可用put
+        paramName: "dropzFile", // 默认为file
+        maxFiles: 1,// 一次性上传的文件数量上限
+        maxFilesize: 2, // 文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png,.jpeg,.txt,.doc,.docx", // 上传的类型
+        addRemoveLinks: true,
+        parallelUploads: 1,// 一次上传的文件数量
+        //previewsContainer:"#preview", // 上传图片的预览窗口
+        dictDefaultMessage: '上传你的照片',
+        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg,.txt,.doc,.docx。",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+        init: function () {
+            this.on("addedfile", function (file) {
+                // 上传文件时触发的事件
+            });
+            this.on("success", function (file, data) {
+                // 上传成功触发的事件
+                console.log(data);
+                var status=data.status;
+                if(status==200){
+                    var filePath=data.filePath;
+                    $("#imgUrl").val(filePath);
+                }
+                console.log(file);
+            });
+            this.on("error", function (file, data) {
+                // 上传失败触发的事件
+                console.log(data);
+                console.log(file);
+            });
+            this.on("removedfile", function (file) {
+                // 删除文件时触发的方法
+            });
+        }
+
+    }
+</script>
+
+<script>
+    function registerUser() {
+        var landName = $("#landName").val();
+        var password = $("#password").val();
+        var account = $("#account").val();
+        var email = $("#email").val();
+        var mobile = $("#mobile").val();
+        var icon = $("#imgUrl").val();
+        var landType = $("#landType").val();
+
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            //请求地址
+            url : "user/registerLandlord",
+            //数据，json字符串
+            data : JSON.stringify(
+                {
+                    "landName":$("#landName").val(),
+                    "password":password,
+                    "account":account,
+                    "email":email,
+                    "mobile":mobile,
+                    "icon":$("#imgUrl").val(),
+                    "landType":landType
+                }
+            ),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                if(result){
+                    window.location.href="shopmain.html";
+                }else{
+                    alert("用户名或密码错误");
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+        window.location.href="shoplogin.html";
+    }
+    var code="";
+    function get() {
+        var email=$("#email").val();
+        console.log(email);
+        $.ajax({
+            type:"post",
+            url:"user/getCode",
+            data:{
+                email:email
+            },
+            success:function (result) {
+                code=result;
+                console.log(code);
+                alert("验证码已发入邮箱")
+            }
+        });
+    }
+
+
+    $(function() {
+
+        var btn = $("#code_tel");
+        $(function() {
+            btn.click(settime);
+        })
+        var countdown = 60;//倒计时总时间，为了演示效果，设为5秒，一般都是60s
+        function settime() {
+            if (countdown == 0) {
+                btn.attr("disabled", false);
+                btn.html("获取验证码");
+                btn.removeClass("disabled");
+                countdown = 60;
+                return;
+            } else {
+                btn.addClass("disabled");
+                btn.attr("disabled", true);
+                btn.html("重新发送(" + countdown + ")");
+                countdown--;
+            }
+            setTimeout(settime, 1000);
+        }
+
+    })
+
+    function checkusername() {
+        var landName=$("#landName").val();
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            //请求地址
+            url : "user/landNameIsExists",
+            data:JSON.stringify({
+                "landName":landName
+            }),
+            //请求成功
+            success : function(result) {
+                alert(result)
+                if(result){
+                    alert("用户名已经存在，请从新输入");
+                    window.location.reload();
+                }else{
+                    alert("用户名可以使用");
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.user.dao.HouseMapper">
+    <!--根据房屋id查看房屋信息initByHousrId-->
+    <select id="initByHousrId" parameterType="int" resultType="com.qf.user.pojo.House">
+        select * from house where houseId=#{houseId}
+    </select>
+
+    <!--根据用户id查询房屋信息initHouseByUid-->
+    <select id="initHouseByUid" parameterType="int" resultType="com.qf.user.pojo.House">
+        select h.* from userinfo u,house_userinfo hu,house h
+         where u.uid=hu.uid and hu.houseid=h.houseId and u.uid=#{uid}
+    </select>
+
+    <!--根据用户uid和房源的houseId删除deleteHouse-->
+    <delete id="deleteHouse" parameterType="com.qf.user.pojo.HouseUserInfo">
+        DELETE from house_userinfo where uid=#{uid} and houseid=#{houseid}
+    </delete>
+    <!--根据houseId查询房屋的信息mapByhouseId-->
+    <select id="mapByhouseId" parameterType="int" resultType="com.qf.user.pojo.House">
+        select provinceId,cityId,areaId,community from house where houseId=#{houseId}
+    </select>
+
+</mapper>

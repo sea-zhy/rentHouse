@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.user.dao.ShopMapper">
+    <!--根据用户名和密码进行登录loginByLandNameAndP-->
+    <select id="loginByLandNameAndP" parameterType="com.qf.user.pojo.Landlord" resultType="com.qf.user.pojo.Landlord">
+        select * from landlord where landName=#{landName} and password=#{password}
+    </select>
+    <!--判断用户名是否可用landNameIsExists-->
+    <select id="landNameIsExists" parameterType="com.qf.user.pojo.Landlord" resultType="com.qf.user.pojo.Landlord">
+        select * from landlord where landName=#{landName}
+    </select>
+    <!--注册registerLandlord-->
+    <insert id="registerLandlord" parameterType="com.qf.user.pojo.Landlord">
+        insert into landlord(landid,landName,password,account,email,mobile,icon,landType)
+        values(default,#{landName},#{password},#{account},#{email},#{mobile},#{icon},#{landType})
+    </insert>
+</mapper>

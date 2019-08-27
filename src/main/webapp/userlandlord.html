@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html  lang="gb2312"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" href="https://pages.anjukestatic.com/usersite/site/img/global/1/favicon.ico" type="image/ico">
+    <link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+
+
+    <title>用户中心－系统消息</title>
+    <style>
+        table{
+            margin-top: 50px;
+            table-layout: fixed;
+            font-size: 20px;
+
+        }
+        tr{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+            <a style="font-size: 25px">百姓安居</a>
+            <i class="split-icon"></i>
+            <a  style="font-size: 25px">用户中心</a>
+        </div>
+        <a href="" class="quit">
+            <i class="iconfont quitIcon"></i>
+            <span>退出</span>
+        </a>
+    </div>
+</div>
+<div class="headerSub-mod">
+    <div class="headerSub clearfix">
+        <img src="https://pic6.ajkimg.com/news/31de4d82b3bf178c703eeaf94a9c81ed?imageMogr2/format/png/thumbnail/140x140" class="user-photo" alt="用户头像">
+        <a class="info-modify" onclick="toUser()"><button>修改资料&gt;</button></a>
+    </div>
+</div><div class="container">
+    <div class="content clearfix">
+        <!-- 侧边栏 -->
+        <div class="side-menu">
+            <ul class="menu-list">
+                <li>
+                    <a onclick="mains()" class="cur"><i class="iconfont"></i>消息</a>
+                </li>
+                <li>
+                    <a onclick="toHouse()" target="_blank"><i class="iconfont"></i>房源管理</a>
+                </li>
+                <li>
+                    <a onclick="toLandlord()" class=""><i class="iconfont"></i>关注的房产经纪人</a>
+                </li>
+                <li>
+                    <a onclick="toInformation()" class=""><i class="iconfont"></i>个人资料</a>
+                </li>
+                <li>
+                    <a  onclick="helps()" class=""><i class="iconfont"></i>发布求租信息</a>
+                </li>
+            </ul>
+        </div>
+        <div class="table-responsive">
+            <table class="table  table-bordered" border="2px">
+                <thead >
+                <tr>
+                    <th >序&ensp;&ensp;号</th>
+                    <th >用户名</th>
+                    <th>账&ensp;&ensp;号</th>
+                    <th >邮&ensp;&ensp;箱</th>
+                    <th >电&ensp;&ensp;话</th>
+                    <!--<th >头&ensp;&ensp;像</th>-->
+                    <th>类&ensp;&ensp;型</th>
+                    <th>操&ensp;&ensp;作</th>
+                </tr>
+                </thead>
+                <tbody class="list-th">
+                <tr >
+                    <th id="landid"></th>
+                    <th id="landName"></th>
+                    <th id="account"></th>
+                    <th id="email"></th>
+                    <th id="mobile"></th>
+                    <!--<th id="icon"></th>-->
+                    <th id="landType"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="dialog">
+    <!-- 退出登录对话框 -->
+    <div class="quit-content">
+        是否要退出百姓安居帐号？
+    </div>
+    <div class="dialog-btn quit-btn">
+        <a onclick="tologin()">
+            <button class="sure">确定</button>
+        </a>
+        <button class="cancel">取消</button>
+    </div>
+
+    <!-- 修改昵称 -->
+    <div class="modify-name">
+        <p class="error-tip name-error">只能包含中文、英文字母、数字，不包含符号</p>
+        <div class="input-box name-box cur">
+            <i class="iconfont left-Icon"></i>
+            <input class="input-content name" type="text" placeholder="只能包含中文、英文字母、数字，不包含符号" maxlength="12">
+            <i class="iconfont ok-tip name-ok"></i>
+        </div>
+    </div>
+    <div class="dialog-btn modify-name-btn">
+        <button class="sure">确定</button>
+        <button class="cancel">取消</button>
+    </div>
+
+    <!--  -->
+    <div class="protect-mobile-modal-body">
+        <div class="tips-head">确定开始保护？</div>
+        <div class="tips-body">您设置的号码将被保护</div>
+    </div>
+    <div class="dialog-btn protect-mobile-modal-footer">
+        <button class="sure btn-confirm">确定</button>
+        <button class="cancel btn-cancel">取消</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" crossorigin="" src="files/jquery-underscore.min.js"></script>
+<script type="text/javascript" crossorigin="" src="files/bbv10.js"></script>
+<script type="text/javascript" crossorigin="" src="js/Member_Web_User_Message.js"></script>
+<script type="text/javascript">
+    var params = window.location.search;
+    var uid = params.split("=")[1];
+    $.ajax({
+        //请求方式
+        type : "GET",
+        //请求的媒体类型
+        contentType: "application/json;charset=UTF-8",
+        //接受数据类型
+        dataType:"json",
+        //请求地址
+        url : "user/initLandlord?uid="+uid,
+        //数据，json字符串
+        //请求成功
+        success : function(result) {
+            console.log(result);
+            $(result).each(function(index,item){
+                var str="<tr><th id=\"landid\">"+item.landid+"</th>"
+                str+="<th id=\"landName\">"+item.landName+"</th>"
+                str+="<th id=\"account\">"+item.account+"</th>"
+                str+="<th id=\"email\">"+item.email+"</th>"
+                str+="<th id=\"mobile\">"+item.mobile+"</th>"
+               /* str+="<th id=\"icon\">"+item.icon+"</th>"*/
+                str+="<th id=\"landType\">"+item.landType+"</th>"
+                str+="<th><button onclick='deletes("+item.landid+","+uid+")'>删除</button></th></tr>"
+                $(".list-th").append(str);
+            })
+        },
+        //请求失败，包含具体的错误信息
+        error : function(e){
+            console.log(e.status);
+            console.log(e.responseText);
+        }
+    });
+
+    function deletes(landid,uid) {
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            //请求地址
+            url : "user/deleteLandlord",
+            //数据，json字符串
+            data : JSON.stringify(
+                {
+                    "uid":uid,
+                    "landid":landid
+                }
+            ),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                if(result){
+                    window.location.reload();
+                }else{
+                    alert("操作失败")
+                }
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+    function toUser() {
+        window.location.href="user.html?uid="+uid;
+    }
+    function toHouse() {
+        window.location.href="userhouse.html?uid="+uid;
+    }
+    function toLandlord() {
+        window.location.href="userlandlord.html?uid="+uid;
+    }
+    function toInformation() {
+        window.location.href="userinformation.html?uid="+uid;
+    }
+    function helps() {
+        window.location.href="userrenthouse.html?uid="+uid;
+    }
+    function mains() {
+        window.location.href="usermain.html?uid="+uid;
+    }
+    function tologin() {
+        $.ajax({
+            //请求方式GET/POST
+            type: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "user/outLogin",
+            //请求成功
+            success: function (result) {
+                console.log(result);
+                if(result){
+                    window.location.href="login.html";
+                }
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+</script>
+</body>
+</html>
