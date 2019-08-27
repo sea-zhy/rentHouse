@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.user.dao.UserInfoMapper">
+    <!--根据用户名和密码进行登录-->
+    <select id="loginByUsernameAndPassword" parameterType="com.qf.user.pojo.UserInfo" resultType="com.qf.user.pojo.UserInfo">
+        select * from userinfo where username=#{username} and password=#{password}
+    </select>
+    <!--判断用户名是否可用-->
+    <select id="usernameIsExists" parameterType="com.qf.user.pojo.UserInfo" resultType="com.qf.user.pojo.UserInfo">
+        select * from userinfo where username=#{username}
+    </select>
+    <!--注册-->
+    <insert id="register" parameterType="com.qf.user.pojo.UserInfo">
+        insert into userinfo(uid,username,password,email,mobile,icon,status,areacode,account)
+        values(default,#{username},#{password},#{email},#{mobile},#{icon},#{status},#{areacode},#{account})
+    </insert>
+    <!--关注房源-->
+    <insert id="addhouse" parameterType="com.qf.user.pojo.UFHouse">
+        insert into house_userinfo(id,uid,houseid) values(default,#{uid},#{houseid})
+    </insert>
+
+    <!--根据UID查询信息initByUid-->
+    <select id="initByUid" parameterType="int" resultType="com.qf.user.pojo.UserInfo">
+        select * from userinfo where uid=#{uid}
+    </select>
+    
+    <!--修改个人信息changeByUid-->
+    <update id="changeByUid" parameterType="com.qf.user.pojo.UserInfo">
+        update userinfo set
+        <trim suffixOverrides=",">
+            <if test="username !=null and username!=''">
+                username = #{username},
+            </if>
+            <if test="password !=null and password!=''">
+                password = #{password},
+            </if>
+            <if test="email !=null and email!=''">
+                email = #{email},
+            </if>
+            <if test="mobile !=null and mobile!=''">
+                mobile = #{mobile},
+            </if>
+            <if test="account !=null and account!=''">
+                account = #{account},
+            </if>
+            <if test="status !=null and status!=''">
+                status = #{status},
+            </if>
+            <if test="icon !=null and icon!=''">
+                icon = #{icon},
+            </if>
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <!--根据uid查询关注的房产经里人initLandlord-->
+    <select id="initLandlord" parameterType="int" resultType="com.qf.user.pojo.Landlord">
+        select l.* from userinfo u,userinfo_landlord ul,landlord l
+        where u.uid=ul.uid and ul.landid=l.landid and u.uid=#{uid}
+    </select>
+
+    <!--取消关注deleteLandlord-->
+    <insert id="deleteLandlord" parameterType="com.qf.user.pojo.UserLand">
+        delete from userinfo_landlord where uid=#{uid} and landid=#{landid}
+    </insert>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.user.dao.RentInfoMapper">
+<!--求租-->
+    <insert id="qiuzu" parameterType="com.qf.user.pojo.RentInfo">
+        insert into rentinfo(rentid,provinceid,cityid,areaid,rentmoney,house_type,house_class,subway,elevator,build_type,uid)
+        values(default,#{provinceid},#{cityid},#{areaid},#{rentmoney},#{houseType},#{houseClass},#{subway},#{elevator},#{buildType},#{uid})
+    </insert>
+
+    <!--查询所有的求租信息initRenthouse-->
+    <select id="initRenthouse" resultType="com.qf.user.vo.RentInfoVO" parameterType="com.qf.user.vo.SearchVO">
+        select i.*,u.username,u.mobile from rentinfo i left join userinfo u on i.uid=u.uid
+        <trim prefix="where" prefixOverrides="and">
+        <if test="provinceid!=null and provinceid!=''">
+            and provinceid = #{provinceid}
+        </if>
+        <if test="cityid!=null and cityid!=''">
+            and cityid = #{cityid}
+        </if>
+        <if test="areaid!=null and areaid!=''">
+            and areaid = #{areaid}
+        </if>
+        </trim>
+    </select>
+</mapper>

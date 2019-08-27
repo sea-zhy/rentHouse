@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>求租信息</title>
+
+    <meta name="keywords" >
+    <meta name="description" >
+    <meta name="Cache-Control">
+    <meta name="applicable-device" >
+
+    <meta name="mobile-agent" content="format=html5">
+    <meta name="mobile-agent" content="format=xhtml;">
+    <meta name="mobile-agent" content="format=wml;">
+    <link rel="alternate" media="only screen and(max-width: 640px)">
+    <link rel="canonical" href="https://nj.sydc.anjuke.com/sp-zu/">
+
+    <meta name="baidu-site-verification" content="e8abd676df9f995bc969ac138b1c0f4d">
+    <meta name="sogou_site_verification" content="7rtgKfBjbl">
+    <meta name="360-site-verification" content="f7b8b308108b2c1c2de2825948822256">
+    <meta name="google-site-verification" content="drkSj5A3WGSgkMXwzh6UfezwLEMsEXoQlMHL25oE1kA">
+    <meta baidu-gxt-verify-token="9e7961d9a5d01603e5c2ae9bccffb9c2">
+    <meta name="shenma-site-verification" content="da9c53da88979ec98afae25b1ca3e43b">
+    <link rel="stylesheet" rev="stylesheet" href="files/sp-list_v20190801172703.css" type="text/css">
+    <script type="text/javascript" src="jquery/jquery-2.1.1.min.js"></script>
+    <style>
+        input, select, input, textarea {
+            font-size: 18px;
+            outline: 0;
+        }
+    </style>
+
+<body>
+<!-- 额外的DOM结构start -->
+<!-- 额外的DOM结构end -->
+<!-- 公共头部start -->
+<!-- START: 顶通广告 -->
+<div class="header-center  ">
+</div>
+<!-- END: 顶通广告 -->
+
+<!-- Pc_Common_HeaderComponent -->
+<div class="topbar ">
+    <div class="header-center clearfix">
+
+        <div id="userbox" class="user">
+            <!-- 用户登录 -->
+            <div class="userlogin userblock">
+                <i class="icon icon-people"></i>
+                <a class="link" rel="nofollow">登录</a>
+                <a class="link"  rel="nofollow">注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- topbar -->
+
+<div class="header header-center clearfix">
+    <a class="logo-site">百姓安居</a>
+    <a class="logo-site">求租信息</a>
+
+    <div id="page1"></div>
+    <div id="page2"></div>
+
+
+    <!-- 城市选择start -->
+    <!-- 城市选择end -->
+
+</div>
+
+<div class="nav header-center clearfix">
+    <ul>
+        <li>
+            <a href="" _soj="navigation" class="current" >商铺出租</a>
+        </li>
+        <li>
+            <a href="" _soj="navigation" class="" >商铺出售</a>
+        </li>
+        <li>
+            <a href="" _soj="navigation" class="" >求租信息</a>
+        </li>
+    </ul>
+</div>
+<form  role="form" style="margin-top: 100px;margin-left:300px;font-size: 20px;">
+    <div >
+        <div >
+            <tr>
+                <td></td>
+                <td>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div data-toggle="distpicker" style="font-size: 20px">
+                                <span class="form-group area">
+                                    省：<select class="form-control" id="provinceid" ></select>
+                                </span>
+                                <span class="form-group area">
+                                   市 <select class="form-control" id="cityid"></select>
+                                </span>
+                                <span class="form-group area">
+                                   区 <select class="form-control" id="areaid"></select>
+                                </span>
+                                <button type="button"  onclick="initPage()"> 查询</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </div>
+    </div>
+</form>
+<div class="table-responsive" style="margin-top: 10px;margin-left:180px;">
+
+    <table class="table  table-bordered" style="border-collapse:collapse;margin-top: 50px; font-size: 20px" border="2">
+
+        <thead>
+        <tr >
+            <th>&ensp;&ensp;序&ensp;&ensp;号&ensp;&ensp;</th>
+            <th>&ensp;&ensp;省&ensp;&ensp;份&ensp;&ensp;</th>
+            <th>&ensp;&ensp;&ensp;市&ensp;&ensp;&ensp;</th>
+            <th>&ensp;&ensp;区/县&ensp;&ensp;</th>
+            <th >&ensp;&ensp;租&ensp;&ensp;金&ensp;&ensp;</th>
+            <th>&ensp;&ensp;房&ensp;&ensp;型&ensp;&ensp;</th>
+            <th >&ensp;&ensp;户&ensp;&ensp;型&ensp;&ensp;</th>
+            <th >&ensp;&ensp;地&ensp;&ensp;铁&ensp;&ensp;</th>
+            <th >&ensp;&ensp;电&ensp;&ensp;梯&ensp;&ensp;</th>
+            <th >&ensp;&ensp;楼&ensp;&ensp;型&ensp;&ensp;</th>
+            <th>&ensp;&ensp;发租人&ensp;&ensp;</th>
+            <th>&ensp;&ensp;电&ensp;&ensp;话&ensp;&ensp;</th>
+        </tr>
+        </thead>
+        <tbody class="list-ths">
+        <tr >
+            <th id="rentid"></th>
+            <th id="provinceids"></th>
+            <th id="cityids"></th>
+            <th id="areaids"></th>
+            <th id="rentmoney"></th>
+            <th id="house_type"></th>
+            <th id="house_class"></th>
+            <th id="subway"></th>
+            <th id="elevator"></th>
+            <th id="build_type"></th>
+            <th id="username"></th>
+            <th id="mobile"></th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 侧边栏start -->
+<div class="sidebar-mod sidebar-top" style="display: none;">
+    <a href="javascript:void(0);" class="sid-nav">
+        <span class="iconfont"></span>
+        <em class="nav-arrow"></em>
+        <div class="sidebar-nav-hover">返回顶部</div>
+    </a>
+</div>
+<script type="text/javascript" src="js/plugins/citypicker/distpicker.data.js"></script>
+<script type="text/javascript" src="js/plugins/citypicker/distpicker.js"></script>
+<script type="text/javascript" crossorigin="" src="jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" crossorigin="" src="files/bbv10.js"></script>
+<script type="text/javascript" crossorigin="" src="js/Member_Web_User_Message.js"></script>
+
+<script type="text/javascript">
+    function initPage(){
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            data:JSON.stringify({
+                "provinceid":$("#provinceid").val(),
+                "cityid":$("#cityid").val(),
+                "areaid":$("#areaid").val()
+            }),
+            //请求地址
+            url : "user/initRenthouse",
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                $(".list-ths").html("");
+                $(result).each(function(index,item){
+                    var str="<tr><th id=\"rentid\">"+item.rentid+"</th>"
+                    str+="<th id=\"provinceids\">"+item.provinceid+"</th>"
+                    str+="<th id=\"cityids\">"+item.cityid+"</th>"
+                    str+="<th id=\"areaids\">"+item.areaid+"</th>"
+                    str+="<th id=\"rentmoney\">"+item.rentmoney+"</th>"
+                    str+="<th id=\"house_type\">"+item.house_type+"</th>"
+                    str+="<th id=\"house_class\">"+item.house_class+"</th>"
+                    str+="<th id=\"subway\">"+item.subway+"</th>"
+                    str+="<th id=\"elevator\">"+item.elevator+"</th>"
+                    str+="<th id=\"build_type\">"+item.build_type+"</th>"
+                    str+="<th id=\"username\">"+item.username+"</th>"
+                    str+="<th id=\"mobile\">"+item.mobile+"</th>"
+                    $(".list-ths").append(str);
+                })
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+
+    }
+    initPage();
+
+    $("#provinceid").bind("change",
+        function(){
+            var provinceid=$("#provinceid").val();
+        }
+    );
+</script>
+
+</body></html>

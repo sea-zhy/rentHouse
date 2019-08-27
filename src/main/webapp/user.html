@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="gb2312"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" href="https://pages.anjukestatic.com/usersite/site/img/global/1/favicon.ico" type="image/ico">
+    <link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+
+
+    <title>用户中心－系统消息</title>
+    <style>
+        input, select, input, textarea {
+            font-size: 25px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+            <a style="font-size: 25px">百姓安居</a>
+            <i class="split-icon"></i>
+            <a  style="font-size: 25px">用户中心</a>
+        </div>
+        <a href="" class="quit">
+            <i class="iconfont quitIcon"></i>
+            <span>退出</span>
+        </a>
+    </div>
+</div>
+<div class="headerSub-mod">
+    <div class="headerSub clearfix">
+        <img src="files/31de4d82b3bf178c703eeaf94a9c81ed" class="user-photo" alt="用户头像">
+        <a class="info-modify" onclick="toUser()"><button>修改资料&gt;</button></a>
+    </div>
+</div><div class="container">
+    <div class="content clearfix">
+        <!-- 侧边栏 -->
+        <div class="side-menu">
+            <ul class="menu-list">
+                <li>
+                    <a onclick="mains()" class="cur"><i class="iconfont"></i>消息</a>
+                </li>
+                <li>
+                    <a onclick="toHouse()" target="_blank"><i class="iconfont"></i>房源管理</a>
+                </li>
+                <li>
+                    <a onclick="toLandlord()" class=""><i class="iconfont"></i>关注的房产经纪人</a>
+                </li>
+                <li>
+                    <a onclick="toInformation()" class=""><i class="iconfont"></i>个人资料</a>
+                </li>
+                <li>
+                    <a  onclick="helps()" class=""><i class="iconfont"></i>发布求租信息</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right-content">
+            <div class="right-cont">
+                <ul class="tab-list clearfix">
+                    <li><a href="#" class="cur">个人资料</a></li>
+                </ul>
+
+                <!-- 个人资料 -->
+                <div class="profile" >
+                    <div class="profile-title" style="font-size: 30px;margin-top: 30px;margin-left: 150px">
+                        <span>基本账号资料</span>
+                    </div>
+                    <div class="panel-body">
+                    <form role="form" style="font-size: 25px;margin-top: 30px;margin-left: 100px">
+                        <div class="form-group">
+                            <input type="hidden"  id="uid" value="test">
+                        </div>
+                        <div class="form-group">
+                            <label >用户名称</label>
+                            <input type="text" class="form-control" id="username" value="用户名称">
+                        </div>
+                        <div class="form-group">
+                            <label >邮&ensp;&ensp;&ensp;&ensp;箱</label>
+                            <input type="text" class="form-control" id="email" value="邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label >电&ensp;&ensp;&ensp;&ensp;话</label>
+                            <input type="text" class="form-control" id="mobile" value="电话">
+                        </div>
+                        <div class="form-group">
+                            <label >头&ensp;&ensp;&ensp;&ensp;像</label>
+                            <input type="text" class="form-control" id="icon" value="头像">
+                        </div>
+                        <div class="form-group">
+                            <label >状&ensp;&ensp;&ensp;&ensp;态</label>
+                            <input type="text" class="form-control" id="status" value="状态">
+                        </div>
+                        <div class="form-group">
+                            <label >区&ensp;&ensp;&ensp;&ensp;号</label>
+                            <input type="text" class="form-control" id="areacode" value="区号">
+                        </div>
+                        <div class="form-group">
+                            <label >昵&ensp;&ensp;&ensp;&ensp;称</label>
+                            <input type="text" class="form-control" id="account" value="昵称">
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="updateUser()" style="font-size: 25px;margin-left: 50px"><i class="glyphicon glyphicon-edit" ></i> 修改</button>
+                        <button type="button" class="btn btn-danger" onclick="flush()" style="font-size: 25px;margin-left: 50px"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dialog">
+        <!-- 退出登录对话框 -->
+        <div class="quit-content">
+            是否要退出百姓安居帐号？
+        </div>
+        <div class="dialog-btn quit-btn">
+            <a onclick="tologin()">
+                <button class="sure">确定</button>
+            </a>
+            <button class="cancel">取消</button>
+        </div>
+
+        <!-- 修改昵称 -->
+        <div class="modify-name">
+            <p class="error-tip name-error">只能包含中文、英文字母、数字，不包含符号</p>
+            <div class="input-box name-box cur">
+                <i class="iconfont left-Icon"></i>
+                <input class="input-content name" type="text" placeholder="只能包含中文、英文字母、数字，不包含符号" maxlength="12">
+                <i class="iconfont ok-tip name-ok"></i>
+            </div>
+        </div>
+        <div class="dialog-btn modify-name-btn">
+            <button class="sure">确定</button>
+            <button class="cancel">取消</button>
+        </div>
+
+        <!--  -->
+        <div class="protect-mobile-modal-body">
+            <div class="tips-head">确定开始保护？</div>
+            <div class="tips-body">您设置的号码将被保护</div>
+        </div>
+        <div class="dialog-btn protect-mobile-modal-footer">
+            <button class="sure btn-confirm">确定</button>
+            <button class="cancel btn-cancel">取消</button>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" crossorigin="" src="files/jquery-underscore.min.js"></script>
+    <script type="text/javascript" crossorigin="" src="files/bbv10.js"></script>
+    <script type="text/javascript" crossorigin="" src="js/Member_Web_User_Message.js"></script>
+    <script type="text/javascript">
+        var params = window.location.search;
+        var uid = params.split("=")[1];
+        //通过ajax从后台获取。
+        $.ajax({
+            //请求方式GET/POST
+            type: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "user/initByUid?uid="+uid,
+            //数据，json字符串
+            data:JSON.stringify(
+                {
+                    "uid":uid,
+                }
+            ),
+            //请求成功
+            success: function (result) {
+                console.log(result);
+                    $("#uid").val(result.uid);
+                    $("#username").val(result.username);
+                    $("#email").val(result.email);
+                    $("#mobile").val(result.mobile);
+                    $("#areacode").val(result.areacode);
+                    $("#icon").val(result.icon);
+                    $("#status").val(result.status);
+                    $("#account").val(result.account);
+            },
+            error: function (e) {
+                console.error(e);
+            }
+        });
+
+        function updateUser(){
+            //1.修改
+//		  alert("inner updateUser");
+            $.ajax({
+                //请求方式GET/POST
+                type: "POST",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //接受数据类型
+                dataType: "json",
+                //请求地址
+                url: "user/changeByUid?uid="+uid,
+                //传递参数
+                data:JSON.stringify(
+                    {
+                        "uid":$("#uid").val(),
+                        "username":$("#username").val(),
+                        "email":$("#email").val(),
+                        "mobile":$("#mobile").val(),
+                        "areacode":$("#areacode").val(),
+                        "icon":$("#icon").val(),
+                        "status":$("#status").val(),
+                        "account":$("#account").val()
+                    }
+                ),
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (e) {
+                    console.error(e);
+                }
+            })
+            //2.跳转
+            window.location.href = "usermain.html?uid="+uid;
+        }
+
+        function flush() {
+            window.location.reload()
+        }
+        function toUser() {
+            window.location.href="user.html?uid="+uid;
+        }
+        function toHouse() {
+            window.location.href="userhouse.html?uid="+uid;
+        }
+        function toLandlord() {
+            window.location.href="userlandlord.html?uid="+uid;
+        }
+        function toInformation() {
+            window.location.href="userinformation.html?uid="+uid;
+        }
+        function helps() {
+            window.location.href="userrenthouse.html?uid="+uid;
+        }
+        function mains() {
+            window.location.href="usermain.html?uid="+uid;
+        }
+        function tologin() {
+            $.ajax({
+                //请求方式GET/POST
+                type: "GET",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //接受数据类型
+                dataType: "json",
+                //请求地址
+                url: "user/outLogin",
+                //请求成功
+                success: function (result) {
+                    console.log(result);
+                    if(result){
+                        window.location.href="userlogin.html";
+                    }
+                },
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script src="/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hWeznYfLmfmGrnS8jMZEAFsFgo9QzRFe"></script>
+    <title>地址解析</title>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+
+<script type="text/javascript">
+
+</script>
+</html>
+<script type="text/javascript">
+   var params = window.location.search;
+    var houseId = params.split("=")[1];
+    var area;
+    var s;
+    $.ajax({
+        //请求方式
+        type : "POST",
+        //请求的媒体类型
+        async:true,
+        contentType: "application/json;charset=UTF-8",
+        //接受数据类型
+        dataType:"json",
+        //请求地址
+        url : "user/mapByhouseId?houseId="+houseId,
+        //数据，json字符串
+        data : JSON.stringify(
+            {
+                "houseId":houseId,
+            }
+        ),
+        //请求成功
+        success : function(result) {
+            console.log(result);
+            $(result).each(function(index,item){
+                s=item.provinceId;
+                var cityId=item.cityId;
+                var areaId=item.areaId;
+                var community=item.community;
+                area=s+cityId+areaId+community;
+                init();
+            })
+        },
+        //请求失败，包含具体的错误信息
+        error : function(e){
+
+            console.log(e.status);
+            console.log(e.responseText);
+        }
+    });
+    // 百度地图API功能
+   function init() {
+       var map = new BMap.Map("allmap");
+       var point = new BMap.Point(116.331398,39.897445);
+       map.centerAndZoom(point,12);
+       // 创建地址解析器实例
+       var myGeo = new BMap.Geocoder();
+       // 将地址解析结果显示在地图上,并调整地图视野
+       myGeo.getPoint(area, function(point){
+           if (point) {
+               map.centerAndZoom(point, 16);
+               map.addOverlay(new BMap.Marker(point));
+           }else{
+               alert("您选择地址没有解析到结果!");
+           }
+       },s);
+   }
+
+</script>
+
