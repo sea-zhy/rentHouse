@@ -30,8 +30,10 @@ public class LandlordController {
      * @return
      */
     @RequestMapping("addHouseNew")
-    public Object addHouseNew(@RequestBody HouseDTO houseDTO){
-        System.out.println(houseDTO);
+    public Object addHouseNew(@RequestBody HouseDTO houseDTO,HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
+        houseDTO.setLanId(lanId);
         return landlordService.addHouseNew(houseDTO);
     }
 
@@ -41,8 +43,10 @@ public class LandlordController {
      * @return
      */
     @RequestMapping("addShopNew")
-    public Object addShopNew(@RequestBody ShopInfoDTO shopInfoDTO){
-        System.out.println(shopInfoDTO+"添加新商铺shop");
+    public Object addShopNew(@RequestBody ShopInfoDTO shopInfoDTO,HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
+        shopInfoDTO.setLanId(lanId);
         return landlordService.addShopNew(shopInfoDTO);
     }
 
@@ -53,8 +57,9 @@ public class LandlordController {
      */
     @RequestMapping("getHouseByLandlordId")
     public Object getHouseByLandlordId(@RequestParam(defaultValue="1",required = true,value="pageNum")
-            Integer pageNum){
-        int lanId = 1;
+            Integer pageNum,HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
         Integer pageSize = 4;
         System.out.println(pageNum);
         PageHelper.startPage(pageNum,pageSize);
@@ -72,8 +77,9 @@ public class LandlordController {
      */
     @RequestMapping("getShopByLandlordId")
     public Object getShopByLandlordId(@RequestParam(defaultValue="1",required = true,value="pageNum")
-            Integer pageNum){
-        int lanId = 2;
+            Integer pageNum,HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
         Integer pageSize = 4;
         PageHelper.startPage(pageNum,pageSize);
         List<ShopInfoDTO> shopList = landlordService.getShopInfoByLanId(lanId);
@@ -110,7 +116,6 @@ public class LandlordController {
      */
     @RequestMapping("removeHouse")
     public Object removeHouse(@RequestParam int houseId){
-        System.out.println(houseId);
         return landlordService.removeHouse(houseId);
     }
 
@@ -121,7 +126,6 @@ public class LandlordController {
      */
     @RequestMapping("removeShopInfo")
     public Object removeShopInfo(@RequestParam int shopId){
-        System.out.println(shopId);
         return landlordService.removeShopInfo(shopId);
     }
 
@@ -132,7 +136,6 @@ public class LandlordController {
      */
     @RequestMapping("editHouseByHouseId")
     public Object editHouseByHouseId(@RequestBody HouseDTO houseDTO){
-        System.out.println(houseDTO);
         return landlordService.editHouseByHouseId(houseDTO);
     }
 
@@ -143,7 +146,6 @@ public class LandlordController {
      */
     @RequestMapping("editShopInfoByShopId")
     public Object editShopInfoByShopId(@RequestBody ShopInfoDTO shopInfoDTO){
-        System.out.println(shopInfoDTO+"修改shopinfo");
         return landlordService.editShopInfoByShopId(shopInfoDTO);
     }
 
@@ -190,18 +192,18 @@ public class LandlordController {
      */
     @RequestMapping("editLandlord")
     public Object editLandlord(@RequestBody Landlord landlord){
-        System.out.println("editLandlord");
         return landlordService.editLandlord(landlord);
     }
 
     /**
      * 获取商家具体信息
-     * @param landId
+     * @param
      * @return
      */
     @RequestMapping("getLanInfo")
-    public Object getLanInfo(@RequestParam int landId){
-        return landlordService.getLanInfo(landId);
+    public Object getLanInfo(HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        return landlordService.getLanInfo(landlord.getLandId());
     }
 
     /**

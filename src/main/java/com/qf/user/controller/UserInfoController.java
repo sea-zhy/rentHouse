@@ -51,6 +51,8 @@ public class UserInfoController {
     //根据UID查询信息initByUid
     @RequestMapping("initByUid")
     public Object initByUid(@RequestParam int uid){
+
+        System.out.println(uid);
         return userInfoService.initByUid(uid);
     }
 

@@ -150,11 +150,7 @@
             //接受数据类型
             dataType: "json",
             //请求地址
-            url: "user/initByUid?uid="+uid,
-            //数据，json字符串
-            data:JSON.stringify({
-                "uid":uid,
-            }),
+            url: "http://localhost:8080/user/initByUid?uid="+uid,
             //请求成功
             success: function (result) {
                 console.log(result);

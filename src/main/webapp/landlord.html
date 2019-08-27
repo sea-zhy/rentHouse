@@ -65,7 +65,7 @@
 		</li>
 		<li>
 			<a href="shopList.html" target="_self"><i class="iconfont"></i>商铺管理</a>
-		</li>								
+		</li>
 	</ul>	
 </div>
         <div class="right-content">
@@ -113,6 +113,7 @@
 </div>
 </body>
 		<script>
+			var landId = window.location.search.split("=").pop();
 			Dropzone.options.imgUpload = {
 				url: "uploadIcon", // 文件提交地址
 				method: "post",  // 也可用put
@@ -157,7 +158,7 @@
 					//返回数据格式
 					dataType: "json",
 					//请求地址
-					url: "http://localhost:8080/getLanInfo?landId="+1,
+					url: "http://localhost:8080/getLanInfo",
 					//请求成功
 					success: function (result) {
 						console.log(result);
@@ -190,7 +191,7 @@
 					url: "http://localhost:8080/editLandlord",
 					//请求成功
 					data:JSON.stringify({
-						"landId":1,
+						"landId":landId,
 						"password":$("#newPawOne").val(),
 						"account":$("#account").val(),
 						"email":$("#email").val(),
@@ -219,7 +220,7 @@
 					url: "http://localhost:8080/loginOut",
 					//请求成功
 					success: function(result) {
-						alert("success");
+						window.location.href="shoplogin.html";
 					},
 					//请求失败，包含具体的错误信息
 					error: function(e) {

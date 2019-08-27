@@ -1,6 +1,6 @@
 package com.qf.user.controller;
 
-import com.qf.user.pojo.Landlord;
+import com.qf.landlord.pojo.Landlord;
 import com.qf.user.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

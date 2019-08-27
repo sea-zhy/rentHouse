@@ -1,7 +1,7 @@
 package com.qf.user.service;
 
 
-import com.qf.user.pojo.Landlord;
+import com.qf.landlord.pojo.Landlord;
 
 public interface ShopService {
 

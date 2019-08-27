@@ -1,7 +1,7 @@
 package com.qf.user.service.impl;
 
 import com.qf.user.dao.ShopMapper;
-import com.qf.user.pojo.Landlord;
+import com.qf.landlord.pojo.Landlord;
 import com.qf.user.service.ShopService;
 import com.qf.user.toolkit.Md5;
 import org.springframework.beans.factory.annotation.Autowired;

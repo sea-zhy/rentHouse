@@ -1,7 +1,7 @@
 package com.qf.user.dao;
 
 
-import com.qf.user.pojo.Landlord;
+import com.qf.landlord.pojo.Landlord;
 
 public interface ShopMapper {
     //根据用户名和密码进行登录loginByLandNameAndP
