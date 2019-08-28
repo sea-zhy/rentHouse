@@ -424,7 +424,7 @@
                     </div>
                     <dl class="item-info">
                         <dt class="iteidm-title" titidle="千峰酒吧街区160平大开间门面"><a
-                                style="font-size: 25px;font-weight: bolder;color: green" href="shopInfo.html?id="
+                                style="font-size: 25px;font-weight: bolder;color: green" href="shopInfoMessage.htmlshopInfo.html?id="
                                 +item.id>千峰酒吧街区160平大开间门面</a></dt>
                         <dd>
                             <span>160 平米</span>
@@ -510,7 +510,7 @@
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
-                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfo.html?id=" + item.id + "\">" + item.title + "</a></dt>";
+                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfoMessage.html?id=" + item.id + "\">" + item.title + "</a></dt>";
                     tdStr += "<dd>";
                     tdStr += "<span class=\"item-area\">" + item.area + "</span>" + "平米";
                     tdStr += "<i class=\"line\">|</i>";
@@ -575,7 +575,7 @@
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
-                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfo.html?id=" + item.id + "\">" + item.title + "</a></dt>";
+                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfoMessage.html?id=" + item.id + "\">" + item.title + "</a></dt>";
                     tdStr += "<dd>";
                     tdStr += "<span class=\"item-area\">" + item.area + "</span>" + "平米";
                     tdStr += "<i class=\"line\">|</i>";
@@ -639,7 +639,7 @@
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
-                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfo.html?id=" + item.id + "\">" + item.title + "</a></dt>";
+                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfoMessage.html?id=" + item.id + "\">" + item.title + "</a></dt>";
                     tdStr += "<dd>";
                     tdStr += "<span class=\"item-area\">" + item.area + "</span>" + "平米";
                     tdStr += "<i class=\"line\">|</i>";
@@ -674,8 +674,6 @@
     //初始化页面
     function initPage() {
         //获取下拉框的值
-
-
         var pageNum = window.location.search.split("=")[1];
         var requestURL = "/shop/listAllShopInfo";
         if (pageNum != null) {
@@ -699,7 +697,7 @@
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
-                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfo.html?id=" + item.id + "\">" + item.title + "</a></dt>";
+                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfoMessage.html?id=" + item.id + "\">" + item.title + "</a></dt>";
                     tdStr += "<dd>";
                     tdStr += "<span class=\"item-area\">" + item.area + "</span>" + "平米";
                     tdStr += "<i class=\"line\">|</i>";
@@ -740,8 +738,6 @@
     //搜索框的模糊查询
     function seacherLike(data) {
         //获取地区下拉框的值
-
-
         var keyword = $("#keyword").val();
         //获取搜索框的值
         if (data == null || data == undefined){
@@ -750,7 +746,6 @@
                 "keyword":keyword
             };
         }
-
         var requestURL = "shop/listAllShopInfoByLike";
         $.ajax({
             //请求方式GET/POST
@@ -774,7 +769,7 @@
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
-                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfo.html?id=" + item.id + "\">" + item.title + "</a></dt>";
+                    tdStr += "<dt class=\"item-title\"><a style=\"font-size: 25px;font-weight: bolder;color: green\" href=\"shopInfoMessage.html?id=" + item.id + "\">" + item.title + "</a></dt>";
                     tdStr += "<dd>";
                     tdStr += "<span class=\"item-area\">" + item.area + "</span>" + "平米";
                     tdStr += "<i class=\"line\">|</i>";
