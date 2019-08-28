@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="GB18030">
+<head>
+    <meta charset="GB18030">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .tree li {
+            list-style-type: none;
+            cursor:pointer;
+        }
+        table tbody tr:nth-child(odd){background:#F4F4F4;}
+        table tbody td:nth-child(even){color:#C00;}
+
+
+        /*body{ background:#00f; }*/
+        /** {background:#4ef563; }*/
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">租房项目-管理后台</a></div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li style="padding-top:8px;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user">Master</i><span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <!--<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>-->
+                            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="index.html"><i class="glyphicon glyphicon-off" onclick="exit()"></i> 退出系统</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li style="margin-left:10px;padding-top:8px;">
+                    <button type="button" class="btn btn-default btn-danger">
+                        <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                    </button>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group">
+                    <li class="list-group-item tree-closed" >
+                        <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
+                    </li>
+                    <li class="list-group-item">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right"></span></span>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 用户信息管理 <span class="badge" style="float:right"></span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="manageusers.html"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon-ok"></i> 商户信息信息管理 <span class="badge" style="float:right"></span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="merchants.html"><i class="glyphicon glyphicon-check"></i> 认证审核</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon-th-large"></i> 出租房信息管理 <span class="badge" style="float:right"></span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="renthouse.html"><i class="glyphicon glyphicon-picture"></i> 出租房详情况</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon-th-large"></i> 商铺信息管理 <span class="badge" style="float:right"></span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="shophouse.html"><i class="glyphicon glyphicon-picture"></i> 商铺详情</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed" >
+                        <a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 出租信息列表</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-inline" role="form" style="float:left;">
+                        <div class="form-group has-feedback">
+
+                        </div>
+                    </form>
+
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered" id="dataTable">
+                            <thead>
+                            <tr >
+                                <th>出租房ID</th>
+                                <th>标题</th>
+                                <th>价格</th>
+                                <th>房屋照片</th>
+                                <th>商铺类型</th>
+                                <th>支付方式</th>
+                                <th>地区</th>
+                                <th>详情</th>
+                                <th>客流人群</th>
+                                <th>物业</th>
+                                <th>置顶时间</th>
+                                <th>最短起租</th>
+                                <th>经营状态</th>
+                                <th width="100">操作</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr >
+                                <td colspan="100" align="center">
+                                    <ul class="pagination">
+                                        <li class="disabled"><a href="#">上一页</a></li>
+                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">下一页</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="script/docs.min.js"></script>
+
+
+
+<script>
+    function initPage(){
+        var pageNum = window.location.search.split("=")[1];
+        var requestURL ="http://localhost:8080/admin/listShopInfo";
+        if (typeof (pageNum)=="undefined"){
+            pageNum = 1;
+        }
+        if(pageNum!=null){
+            pageNum = parseInt(pageNum);
+            requestURL+="?pageNum="+pageNum;
+
+        }
+        //1.从后台的listAllUserInfo接口获取数据
+        $.ajax({
+            //请求方式
+            type : "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            //请求地址
+            //在这里只获取状态为1的用户
+            url :requestURL,
+            //数据，json字符串
+            //请求成功
+            success : function(result) {
+//                    console.log(result);
+                //2.将数据填充到table中,添加分页插件后  不是从对象中取数据而是从集合中去取他的属性故它的属性就是由遍历result变成遍历result.list,不在是原来的
+                $(result.list).each(function(index,item){
+                    console.log(item);
+                    var trStr = "<tr>";
+                    //获取id并拼接
+                    trStr+="<td>"+item.id+"</td>";
+                    // trStr+="<td><input type=\"checkbox\"></td>";
+                    trStr+="<td>"+item.title+"</td>";
+                    trStr+="<td>"+item.price+"</td>";
+                    trStr+="<td>"+item.icon+"</td>";
+                    trStr+="<td>"+item.shopType+"</td>";
+                    trStr+="<td>"+item.pay_type+"</td>";
+                    trStr+="<td>"+item.area+"</td>";
+                    trStr+="<td>"+item.info+"</td>";
+                    trStr+="<td>"+item.crowd+"</td>";
+                    trStr+="<td>"+item.property+"</td>";
+                    trStr+="<td>"+item.upTime+"</td>";
+                    trStr+="<td>"+item.rentDate+"</td>";
+                    trStr+="<td>"+item.operating_state+"</td>";
+                    trStr+="<td>";
+                    // trStr+="<button type=\"button\" class='btn btn-success btn-xs'><i class=' glyphicon glyphicon-check'  onclick='assignRole("+item.userid+")'></i></button>&nbsp;"
+                    trStr+="<button type=\"button\" class='btn btn-primary btn-xs'><i class=' glyphicon glyphicon-pencil' onclick='editUser("+item.id+")'></i></button>&nbsp;"
+                    trStr+="<button type=\"button\" class='btn btn-danger btn-xs'><i class=' glyphicon glyphicon-remove' onclick='removeUser("+item.id+")'></i></button>"
+                    trStr+="</td>";
+                    trStr+="</tr>";
+                    $("#dataTable").append(trStr);
+                });
+                var splitePageStr = "<li class=\"disabled\"></li>";
+                if(pageNum<=1||pageNum==""){
+                    splitePageStr += "<li><a href=\"shophouse.html?pageNum=1\">上一页</a></li>";
+                }else{
+                    splitePageStr += "<li><a href=\"shophouse.html?pageNum="+(pageNum-1)+"\">上一页</a></li>";
+                }
+                for(var i=1;i<=result.pages;i++){
+                    splitePageStr += "<li><a href=\"shophouse.html?pageNum="+i+"\">"+i+"</a></li>";
+                }
+                if(pageNum>=result.pages){
+                    splitePageStr += "<li ><a href=\"shophouse.html?pageNum="+result.pages+"\">下一页</a></li>";
+                }else {
+                    splitePageStr += "<li><a href=\"shophouse.html?pageNum=" + (parseInt(pageNum) + 1) + "\">下一页</a></li>";
+                }
+                $(".pagination").html("");
+                $(".pagination").append(splitePageStr);
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+    initPage();
+    // 根据id来删除商铺房信息
+    function removeUser(id) {
+
+        $.ajax({
+
+            type :"POST",
+
+            data:JSON.stringify(
+                {
+                    "id":id,
+                }
+            ),
+
+            contentType:"application/json;charset=UTF-8",
+
+            dataType:"json",
+
+            url:"http://localhost:8080/admin/deleteShopInfoById",
+
+            success:function (result) {
+                if(result){
+
+                    window.location.reload();
+                }else{
+                    alert("删除时效")
+                }
+            },
+            error:function (e) {
+                console.log(e.status)
+
+                console.log(e.responseText);
+            }
+        });
+    }
+    // 修改功能:编辑用户id信息
+    function editUser(id){
+        window.location.href="shopedit.html?id="+id;
+    }
+    // 点击推出跳转至登录页面
+    function exit(){
+        window.location.href="adminlogin.html";
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".list-group-item").click(function(){
+            if ( $(this).find("ul") ) {
+                $(this).toggleClass("tree-closed");
+                if ( $(this).hasClass("tree-closed") ) {
+                    $("ul", this).hide("fast");
+                } else {
+                    $("ul", this).show("fast");
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

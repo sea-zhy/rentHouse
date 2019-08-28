@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="GB18030">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+    </style>
+</head>
+<body background="http://img95.666pic.com/photo/40035/0244.jpg_wh1200.jpg"
+      style=" background-repeat:no-repeat ;
+background-size:100% 100%;
+background-attachment: fixed;">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <div><a class="" href="https://www.baidu.com" style="font-size:32px;">百姓安居</a></div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-user"></i> 管理员登录</h2>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="adname" placeholder="请输入登录账号" onblur="checkAdame()" autofocus>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div ></div>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="password" placeholder="请输入登录密码" style="margin-top:10px;">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <!--<tr>-->
+
+
+        <!--<tr>-->
+            <!--     <th>验证码:</th>-->
+            <!--    <td>-->
+            <!--             <input type="text" id="captcha" name="captcha" class="text" maxlength="10"  onblur="chech()" />-->
+            <!--              <img id="captchaImage" src="admin/captcha.form"/>-->
+            <!--      </td>-->
+        <!--</tr>-->
+
+
+        <!--<div class="checkbox">-->
+            <!--<label>-->
+                <!--<input type="checkbox" value="remember-me"> 记住我-->
+            <!--</label>-->
+            <br>
+            <label>
+
+            </label>
+            <!--验证码：<input type="text" size="10px"  name="VerificationCode" placeholder="请输入验证码"  id="VerificationCode"/>-->
+
+            <!--<span  style="padding: 1px;">-->
+
+<!--<a href="javascript:void(0);" onclick="VerificationCode()"><img id="randCodeImage" src="VerificationCode/generate.action"/></a>-->
+
+</span>
+            <label style="float:right">
+                <!--<a href="reg.html">我要注册</a>-->
+            </label>
+        <!--</div>-->
+        <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 登录</a>
+
+
+    </form>
+
+</div>
+
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function dologin() {
+        //1.获取用户名与密码
+        var adName = $("#adname").val();
+        var password = $("#password").val();
+        console.log(adName+":"+password);
+     //   alert("+++++");
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType:"json",
+            //请求地址
+            url : "http://localhost:8080/admin/loginCheck",
+            //数据，json字符串
+            data : JSON.stringify(
+                {
+                    "adname":adName,
+                    "password":password
+                }
+            ),
+            //请求成功
+
+            success : function(result) {
+                //alert("没进去?");
+                console.log(adname);
+                console.log(result);
+                if(result){
+                    window.location.href="manageusers.html";
+                }else{
+                    alert("账号或密码错误");
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+
+            }
+        });
+
+    }
+// 当鼠标移开后能对所对输入的管理员昵称进行检测
+    function checkAdame() {
+        var userName = $("#adname").val();
+        $.ajax({
+            type: "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "http://localhost:8080/admin/loginCheckUserName",
+            //数据，json字符串
+            data: JSON.stringify(
+                {
+                    "adname": userName,
+                }
+            ),
+            //请求成功
+            success: function (data) {
+                if (data == 1) {
+                    alert("正确的管理员昵称")
+                } else {
+                    alert("此管理员不存在");
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                // alert("失败")
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+
+
+        //  }
+        // 前台点击更换验证码
+        // $('#captchaImage').click(function () {
+        //     $('#captchaImage').attr("src", "admin/captcha.form?timestamp=" + (new Date()).valueOf());
+
+            // $("#img").click(function(){
+            //     $(this).attr("src","yzm.action?"+new Date().getTime());
+
+
+            //   });
+            // 鼠标脱离后立马验证验证码的正确与否
+        //
+        // })
+        //     }
+
+
+    // function chech() {
+    //     //
+    //     var verificationCode = $('#captcha').val();
+    //     alert(verificationCode);
+    //     //     //       var code = document.getElementById("captchaImage");
+    //     //     //       alert(code);
+    //     //     //      if (code != verificationCode) {
+    //     //     //           alert("验证码输入错误,请重新输入!")
+    //     //     // } else {
+    //     //     //           alert("congratulation");
+    //     //     //      }
+    //     //     //   }
+    //     //
+    //     $.ajax({
+    //         type: "GET",
+    //         //请求的媒体类型
+    //         contentType: "application/json;charset=UTF-8",
+    //         //接受数据类型
+    //         dataType: "json",
+    //         //请求地址
+    //         url: "http://localhost:8080/admin/captcha",
+    //         //数据，json字符串
+    //         // data: JSON.stringify(
+    //         //     {
+    //         //         "captcha": verificationCode,
+    //         //     }
+    //         // ),
+    //         //请求成功
+    //         success: function (result) {
+    //             alert(result);
+    //             if (result== verificationCode) {
+    //                 alert("Congrution")
+    //             } else {
+    //                 alert("验证码输入错误");
+    //             }
+    //         },
+    //         //请求失败，包含具体的错误信息
+    //         error: function (e) {
+    //             //  alert("失败")
+    //             console.log(e.status);
+    //             console.log(e.responseText);
+    //         }
+    //     });
+    }
+</script>
+</body>
+</html>

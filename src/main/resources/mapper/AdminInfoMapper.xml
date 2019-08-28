@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.admin.dao.AdminInfoDAO">
+            <resultMap id="adminInfoMap" type="com.qf.admin.pojo.AdminInfo">
+                <id column="id" property="id"></id>
+                <result property="adname" column="adname"></result>
+                <result property="password" column="password"></result>
+                <result property="email" column="email"></result>
+                <result property="mobile" column="mobile"></result>
+                <result property="account" column="account"></result>
+                <result property="icon" column="icon"></result>
+                <result property="status" column="status"></result>
+                <result property="areacode" column="areacode"></result>
+                <collection property="userInfoList" ofType="com.qf.admin.pojo.UserInfo">
+                    <id property="uid" column="uid"></id>
+                    <result property="username" column="username"></result>
+                    <result property="password" column="password"></result>
+                    <result property="email" column="email"></result>
+                    <result property="icon" column="icon"></result>
+                    <result property="status" column="status"></result>
+                    <result property="areacode" column="areacode"></result>
+                    <result property="account" column="account"></result>
+                    <result property="mobile" column="mobile"></result>
+                </collection>
+                <collection property="rentHouseInfoList" ofType="com.qf.admin.pojo.RentHouseInfo">
+                    <id property="houseId" column="houseId"></id>
+                    <result property="areaId" column="areaId"></result>
+                    <result property="community" column="community"></result>
+                    <result property="build" column="build"></result>
+                    <result property="unit" column="unit"></result>
+                    <result property="num" column="num"></result>
+                    <result property="room" column="room"></result>
+                    <result property="hall" column="hall"></result>
+                    <result property="toilet" column="toilet"></result>
+                    <result property="level" column="level"></result>
+                    <result property="allLevel" column="allLevel"></result>
+                    <result property="elevator" column="elevator"></result>
+                    <result property="area" column="area"></result>
+                    <result property="housingtype" column="housingtype"></result>
+                    <result property="decorate" column="decorate"></result>
+                    <result property="toward" column="toward"></result>
+                    <result property="rent" column="rent"></result>
+                    <result property="payType" column="payType"></result>
+                    <result property="roomType" column="roomType"></result>
+                    <result property="roomToward" column="roomToward"></result>
+                    <result property="roommate" column="roommate"></result>
+                    <result property="roomArea" column="roomArea"></result>
+                    <result property="title" column="title"></result>
+                    <result property="info" column="info"></result>
+                    <result property="status" column="status"></result>
+                    <result property="upTime" column="upTime"></result>
+                    <result property="landId" column="landId"></result>
+                    <result property="icon" column="icon"></result>
+                </collection>
+                <collection property="shopInfoList" ofType="com.qf.admin.pojo.ShopInfo">
+                    <id property="id" column="id"></id>
+                    <result property="title" column="title"></result>
+                    <result property="price" column="price"></result>
+                    <result property="icon" column="icon"></result>
+                    <result property="shopType" column="shopType"></result>
+                    <result property="pay_type" column="pay_type"></result>
+                    <result property="floor" column="floor"></result>
+                    <result property="area" column="area"></result>
+                    <result property="info" column="info"></result>
+                    <result property="crowd" column="crowd"></result>
+                    <result property="business_type" column="business_type"></result>
+                    <result property="operating_state" column="operating_state"></result>
+                    <result property="specification" column="specification"></result>
+                    <result property="property" column="property"></result>
+                    <result property="rentDate" column="rentDate"></result>
+                    <result property="address_id" column="address_id"></result>
+                    <result property="agent_id" column="agent_id"></result>
+                    <result property="lanId" column="lanId"></result>
+                    <result property="upTime" column="upTime"></result>
+                </collection>
+            </resultMap>
+        <!--管理员登录&#45;&#45;账号密码-->
+    <select id="loginCheckByAdminInfo" resultType="com.qf.admin.pojo.AdminInfo" parameterType="com.qf.admin.pojo.AdminInfo">
+        SELECT * FROM t_admin where adname = #{adname} and password = #{password}
+    </select>
+
+    <!--获取所有用户(游客)信息-->
+    <select id="listUserInfo" resultType="com.qf.admin.pojo.UserInfo">
+      select *  from userinfo where status = 1
+    </select>
+        <!--修改用户信息前需要先获取用户信息-->
+    <select id="getUserInfoById" parameterType="int" resultType="com.qf.admin.pojo.UserInfo">
+      select * from userinfo where uid=#{uid}
+    </select>
+    <!--根据用户的id修改用户信息-->
+    <update id="editUserInfoById" parameterType="com.qf.admin.pojo.UserInfo">
+        update userinfo set
+
+        <trim suffixOverrides=",">
+            <if test="username !=null and username!=''">
+                username = #{username},
+            </if>
+            <if test="password !=null and password!=''">
+                password = #{password},
+            </if>
+            <if test="account !=null and account!=''">
+                account = #{account},
+            </if>
+            <if test="email !=null and email!=''">
+                email = #{email},
+            </if>
+            <if test="mobile !=null and mobile!=''">
+                mobile = #{mobile},
+            </if>
+            <if test="areacode !=null and areacode!=''">
+                areacode = #{areacode},
+            </if>
+            <if test="icon !=null and icon!=''">
+            icon = #{icon},
+             </if>
+            <if test="status !=null and status!=''">
+                status = #{status},
+            </if>
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <!--根据用户id来删除用户的信息将其状态置为0-->
+    <delete id="deleteUserById" parameterType="int">
+      update userinfo set status = 0 where uid = #{uid}
+    </delete>
+
+    <!--后台获取所有租房信息-->
+    <select id="listRentHouseInfo" resultType="com.qf.admin.pojo.RentHouseInfo">
+        select *  from house where status=1
+    </select>
+
+    <!--修改租房信息-->
+    <update id="editRentHouseInfoById" parameterType="com.qf.admin.pojo.RentHouseInfo">
+        update house set
+
+        <trim suffixOverrides=",">
+
+            <if test="areaId !=null and areaId!=''">
+                areaId = #{areaId},
+            </if>
+            <if test="community !=null and community!=''">
+                community = #{community},
+            </if>
+            <if test="build !=null and build!=''">
+                build = #{build},
+            </if>
+            <if test="unit !=null and unit!=''">
+                unit = #{unit},
+            </if>
+            <if test="title !=null and title!=''">
+                title = #{title},
+            </if>
+            <if test="num !=null and num!=''">
+                num = #{num},
+            </if>
+            <if test="room !=null and room!=''">
+                room = #{room},
+            </if>
+            <if test="hall !=null and hall!=''">
+                hall = #{hall},
+            </if>
+            <if test="toilet !=null and toilet!=''">
+                toilet = #{toilet},
+            </if>
+            <if test="level !=null and level!=''">
+                level= #{level},
+            </if>
+            <if test="allLevel !=null and allLevel!=''">
+                allLevel = #{allLevel},
+            </if>
+            <if test="elevator !=null and elevator!=''">
+                elevator = #{elevator},
+            </if>
+            <if test="area !=null and area!=''">
+                area = #{area},
+            </if>
+            <if test="housingtype !=null and housingtype!=''">
+                housingtype = #{housingtype},
+            </if>
+            <if test="decorate !=null and decorate!=''">
+                decorate = #{decorate},
+            </if>
+            <if test="toward !=null and toward!=''">
+                toward = #{toward},
+            </if>
+            <if test="rent !=null and rent!=''">
+                rent = #{rent},
+            </if>
+            <if test="payType !=null and payType!=''">
+                payType = #{payType},
+            </if>
+            <if test="roomType !=null and roomType!=''">
+                roomType = #{roomType},
+            </if>
+            <if test="roomToward !=null and roomToward!=''">
+                roomToward = #{roomToward},
+            </if>
+            <if test="roommate !=null and roommate!=''">
+                roommate = #{roommate},
+            </if>
+            <if test="roomArea !=null and roomArea!=''">
+                roomArea = #{roomArea},
+            </if>
+            <if test="info !=null and info!=''">
+                info = #{info},
+            </if>
+            <if test="status !=null and status!=''">
+                status = #{status},
+            </if>
+            <if test="upTime !=null and upTime!=''">
+                upTime = #{upTime},
+            </if>
+            <if test="landId !=null and landId!=''">
+                landId= #{landId},
+            </if>
+            <if test="icon !=null and icon!=''">
+               icon = #{icon},
+            </if>
+        </trim>
+        where houseId = #{houseId}
+    </update>
+
+    <!--根据租房ID来删除租房的信息将其状态置为0-->
+    <delete id="deleteRentHouseInfoById" parameterType="int">
+      update house set status = 0 where houseId = #{houseId}
+    </delete>
+
+
+    <!--获取所有商铺信息-->
+    <select id="listShopInfo" resultType="com.qf.admin.pojo.ShopInfo">
+      select *  from shopinfo where status = 1
+    </select>
+
+    <!--根据商铺的id修改商铺信息-->
+    <update id="editShopInfoById" parameterType="com.qf.admin.pojo.ShopInfo">
+        update shopinfo set
+
+        <trim suffixOverrides=",">
+            <if test="title !=null and title!=''">
+                title = #{title},
+            </if>
+            <if test="price !=null and price!=''">
+                price = #{price},
+            </if>
+            <if test="icon !=null and icon!=''">
+                 icon = #{icon},
+            </if>
+            <if test="shopType !=null and shopType!=''">
+                shopType = #{shopType},
+            </if>
+            <if test="pay_type !=null and pay_type!=''">
+                pay_type = #{pay_type},
+            </if>
+            <if test="floor !=null and floor!=''">
+                floor = #{floor},
+            </if>
+            <if test="area !=null and area!=''">
+                area = #{area},
+            </if>
+            <if test="info !=null and info!=''">
+                info = #{info},
+            </if>
+            <if test="crowd !=null and crowd!=''">
+                crowd = #{crowd},
+            </if>
+            <if test="business_type !=null and business_type!=''">
+                business_type = #{business_type},
+            </if>
+            <if test="operating_state !=null and operating_state!=''">
+                operating_state = #{operating_state},
+            </if>
+            <if test="specification !=null and specification!=''">
+                specification = #{specification},
+            </if>
+            <if test="property !=null and property!=''">
+                property = #{property},
+            </if>
+            <if test="rentDate !=null and rentDate!=''">
+                rentDate = #{rentDate},
+            </if>
+            <if test="address_id !=null and address_id!=''">
+                address_id = #{address_id},
+            </if>
+            <if test="lanId !=null and lanId!=''">
+                lanId = #{lanId},
+            </if>
+            <if test="upTime !=null and upTime!=''">
+                upTime = #{upTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!--根据商铺id来删除商铺的信息将其状态置为0-->
+    <delete id="deleteShopInfoById" parameterType="int">
+      delete from shopinfo  where id = #{id}
+    </delete>
+<!--根据id来获取租房的详细信息-->
+    <select id="listRentHouseInfoById" parameterType="int" resultType="com.qf.admin.pojo.RentHouseInfo">
+        select *  from house where houseId =#{houseId}
+    </select>
+
+    <!--根据商铺的ID来获取商铺的信息-->
+    <select id="listShopInfoById" parameterType="int" resultType="com.qf.admin.pojo.ShopInfo">
+      select *  from shopinfo where  id =#{id}
+    </select>
+        <!--鼠标拖离后立即检测管理员户是否存在-->
+    <select id="loginCheckUserName" resultType="Integer">
+       select count(*)  from t_admin where adname =#{adname}
+
+    </select>
+
+</mapper>
