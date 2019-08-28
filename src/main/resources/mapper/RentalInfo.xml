@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.house.dao.RentalMapperMessage">
+        <!--模糊所有-->
+        <select id="getRentalInfo" resultType="com.qf.house.pojo.RentalInfo" parameterType="com.qf.house.dto.RentalInfoDTO">
+            SELECT h.*,l.landName FROM house h,landlord l
+            where h.lanId = l.landid and 1=1
+                <if test="title != null and title != ''">
+                    and title like concat('%',#{title},'%')
+                </if>
+                         ORDER BY status DESC
+        </select>
+            <!--价格,房型查询-->
+            <select id="getRent" resultType="com.qf.house.pojo.RentalInfo">
+                SELECT h.*,l.landName FROM house h,landlord l
+                where  h.lanId = l.landid and 1=1
+                <if test="maxrent !=null and minrent != ''and maxrent !=null and minrent != ''">
+                    and rent between  #{minrent} and #{maxrent}
+                </if>
+            </select>
+
+                  <!--房型价格查询-->
+            <select id="getHallAndRoomType" resultType="com.qf.house.pojo.RentalInfo">
+                SELECT h.*,l.landName FROM house h,landlord l
+                where h.lanId = l.landid and 1=1
+                <if test="hall != null and hall != ''">
+                    and hall = #{hall}
+                </if>
+                <if test="roomType != null and roomType != ''">
+                    and roomType = #{roomType}
+                </if>
+                ORDER BY status DESC
+            </select>
+                <!--地区查询-->
+            <select id="getLocation" resultType="com.qf.house.pojo.RentalInfo">
+                SELECT h.*,l.landName FROM house h,landlord l
+                where  h.lanId = l.landid and 1=1
+                <if test="provinceId != null and provinceId != ''">
+                    and provinceId = #{provinceId}
+                </if>
+                <if test="cityId != null and cityId != ''">
+                    and cityId = #{cityId}
+                </if>
+                <if test="areaId != null and areaId != ''">
+                    and areaId = #{areaId}
+                </if>
+                ORDER BY status DESC
+            </select>
+
+        <!--由houseid搜索,商铺详细信息-->
+        <select id="listAllHouseInfoByShopId" parameterType="int" resultType="com.qf.house.pojo.RentalInfo">
+          SELECT h.*,l.landName,l.mobile FROM house h,landlord l WHERE h.lanId = l.landid AND h.houseid=#{houseId}
+        </select>
+
+        <!--由houseid搜索配套设备-->
+        <select id="listEquipmentsByShopId" parameterType="int" resultType="com.qf.house.VO.FacilitiesVO">
+          SELECT f.facName FROM house_facilities hf,facilities f WHERE hf.houseId=#{houseid} AND hf.facId = f.facId
+        </select>
+
+        <!--由houseid搜索house的img-->
+        <select id="listImgsByShopId" parameterType="int" resultType="com.qf.house.VO.ImgsVO">
+          SELECT i.img_url FROM house h,img i WHERE i.houseId = h.houseid AND h.houseid = #{houseid}
+        </select>
+
+</mapper>
