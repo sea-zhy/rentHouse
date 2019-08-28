@@ -125,35 +125,10 @@ background-attachment: fixed;">
 // 当鼠标移开后能对所对输入的管理员昵称进行检测
     function checkAdame() {
         var userName = $("#adname").val();
-        $.ajax({
-            type: "POST",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            //接受数据类型
-            dataType: "json",
-            //请求地址
-            url: "http://localhost:8080/admin/loginCheckUserName",
-            //数据，json字符串
-            data: JSON.stringify(
-                {
-                    "adname": userName,
-                }
-            ),
-            //请求成功
-            success: function (data) {
-                if (data == 1) {
-                    alert("正确的管理员昵称")
-                } else {
-                    alert("此管理员不存在");
-                }
-            },
-            //请求失败，包含具体的错误信息
-            error: function (e) {
-                // alert("失败")
-                console.log(e.status);
-                console.log(e.responseText);
-            }
-        })
+        if(userName.trim()==""){
+            alert("用户名不能为空");
+        }
+
 
 
         //  }

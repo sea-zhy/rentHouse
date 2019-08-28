@@ -70,23 +70,21 @@
                     <li class="list-group-item tree-closed" >
                         <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
                     </li>
-                    <li class="list-group-item">
-                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right"></span></span>
                     <li class="list-group-item tree-closed">
                         <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 用户信息管理 <span class="badge" style="float:right"></span></span>
                         <ul style="margin-top:10px;display:none;">
                             <li style="height:30px;">
                                 <a href="manageusers.html"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                             </li>
+
                         </ul>
                     </li>
                     <li class="list-group-item tree-closed">
                         <span><i class="glyphicon glyphicon-ok"></i> 商户信息信息管理 <span class="badge" style="float:right"></span></span>
                         <ul style="margin-top:10px;display:none;">
                             <li style="height:30px;">
-                                <a href="merchants.html"><i class="glyphicon glyphicon-check"></i> 认证审核</a>
+                                <a href="merchants.html"><i class="glyphicon glyphicon-check"></i> 商户列表</a>
                             </li>
-
                         </ul>
                     </li>
                     <li class="list-group-item tree-closed">
@@ -107,9 +105,7 @@
 
                         </ul>
                     </li>
-                    <li class="list-group-item tree-closed" >
-                        <a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -144,7 +140,6 @@
                                 <th>租金</th>
                                 <th>支付方式</th>
                                 <th>置顶时间</th>
-                                <th>出租屋头像</th>
 
 
                                 <th width="100">操作</th>
@@ -225,7 +220,6 @@
                     trStr+="<td>"+item.rent+"</td>";
                     trStr+="<td>"+item.payType+"</td>";
                     trStr+="<td>"+item.upTime+"</td>";
-                    trStr+="<td>"+item.icon+"</td>";
                     trStr+="<td>";
                     // trStr+="<button type=\"button\" class='btn btn-success btn-xs'><i class=' glyphicon glyphicon-check'  onclick='assignRole("+item.userid+")'></i></button>&nbsp;"
                     trStr+="<button type=\"button\" class='btn btn-primary btn-xs'><i class=' glyphicon glyphicon-pencil' onclick='editUser("+item.houseId+")'></i></button>&nbsp;"

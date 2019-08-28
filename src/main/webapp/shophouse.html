@@ -69,23 +69,21 @@
                     <li class="list-group-item tree-closed" >
                         <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
                     </li>
-                    <li class="list-group-item">
-                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right"></span></span>
                     <li class="list-group-item tree-closed">
                         <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 用户信息管理 <span class="badge" style="float:right"></span></span>
                         <ul style="margin-top:10px;display:none;">
                             <li style="height:30px;">
                                 <a href="manageusers.html"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                             </li>
+
                         </ul>
                     </li>
                     <li class="list-group-item tree-closed">
                         <span><i class="glyphicon glyphicon-ok"></i> 商户信息信息管理 <span class="badge" style="float:right"></span></span>
                         <ul style="margin-top:10px;display:none;">
                             <li style="height:30px;">
-                                <a href="merchants.html"><i class="glyphicon glyphicon-check"></i> 认证审核</a>
+                                <a href="merchants.html"><i class="glyphicon glyphicon-check"></i> 商户列表</a>
                             </li>
-
                         </ul>
                     </li>
                     <li class="list-group-item tree-closed">
@@ -106,9 +104,7 @@
 
                         </ul>
                     </li>
-                    <li class="list-group-item tree-closed" >
-                        <a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -131,8 +127,7 @@
                             <tr >
                                 <th>出租房ID</th>
                                 <th>标题</th>
-                                <th>价格</th>
-                                <th>房屋照片</th>
+                                <th>价格/月</th>
                                 <th>商铺类型</th>
                                 <th>支付方式</th>
                                 <th>地区</th>
@@ -211,7 +206,6 @@
                     // trStr+="<td><input type=\"checkbox\"></td>";
                     trStr+="<td>"+item.title+"</td>";
                     trStr+="<td>"+item.price+"</td>";
-                    trStr+="<td>"+item.icon+"</td>";
                     trStr+="<td>"+item.shopType+"</td>";
                     trStr+="<td>"+item.pay_type+"</td>";
                     trStr+="<td>"+item.area+"</td>";
