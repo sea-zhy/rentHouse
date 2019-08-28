@@ -89,12 +89,10 @@
 
         <div id="userbox" class="user">
             <!-- 用户登录 -->
-            <div class="userlogin userblock">
+            <div class="userlogin userblock" id="checkLoginOrNo">
                 <i class="icon icon-people"></i>
-                <a class="link"
-                   href="https://login.anjuke.com/login/form?history=aHR0cHM6Ly9uai5zeWRjLmFuanVrZS5jb20vc3AtenUv"
-                   rel="nofollow">登录</a>
-                <a class="link" href="https://user.anjuke.com/register" rel="nofollow">注册</a>
+                <a class="link" href="shoplogin.html" rel="nofollow">登录</a>
+                <a class="link" href="shopreg.html" rel="nofollow">注册</a>
             </div>
         </div>
     </div>
@@ -288,13 +286,18 @@
 <div class="nav header-center clearfix">
     <ul>
         <li>
-            <a href="http://localhost:8080/houseIndex.html" _soj="navigation" class="current" target="$item.target">
-                租房
+            <a href="shopIndex.html" >
+                商铺出租
             </a>
         </li>
         <li>
-            <a href="http://localhost:8080/houseIndex.html" _soj="navigation" class="" target="$item.target">
-               找房
+            <a href="houseIndex.html" >
+                房屋出租
+            </a>
+        </li>
+        <li>
+            <a href="shopinit.html" >
+                求租信息
             </a>
         </li>
     </ul>
@@ -450,21 +453,45 @@
     </div>
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/distpicker.data.js"></script>
-<script type="text/javascript" src="js/distpicker.js"></script>
+<script type="text/javascript" src="js/plugins/citypicker/distpicker.data.js"></script>
+<script type="text/javascript" src="js/plugins/citypicker/distpicker.js"></script>
 <script>
-    // $("#province1").bind("change",
-    //     function(){
-    //         var province=$("#province1").val();
-    //     }
-    // );
 
-
-        // 地区查找
     var myVar;
     function getChange() {
         myVar = setTimeout(f, 200);
     }
+    var strLogin="";
+    function initLogin(){
+
+        $.ajax({
+            //请求方式GET/POST
+            type: "Get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "checkLoginOrNo",
+            success: function (result) {
+                if(result.landName != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"landlord.html\" rel=\"nofollow\">"+result.landName+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }else if(result.username != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"usermain.html\" rel=\"nofollow\">"+result.username+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        })
+    }
+    initLogin();
     function f() {
         $("#province1 option:selected").val()
         console.log( $("#province1 option:selected").val())
@@ -514,7 +541,7 @@
                     tdStr +="<span class=\"level\">"+item.level+"</span>"+"楼";
                     // tdStr +="<span class=\"shopType\">"+item.shopType+"</span>";
                     tdStr +="</dd>";
-                    tdStr +="<dd>王蒙</dd>";
+                    tdStr +="<dd>"+item.landName+"</dd>";
                     tdStr +="</dl>";
                     tdStr +="<div class=\"item-price\">";
                     tdStr +="<div class=\"price-a\">";

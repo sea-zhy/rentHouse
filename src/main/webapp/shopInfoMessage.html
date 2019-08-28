@@ -43,7 +43,7 @@
 
 
         <div style="float: right">
-            <div  class="userbox" id="checklogin">
+            <div  class="userbox" id="checkLoginOrNo">
                 <i class="icon icon-user"></i>
                 <a href="shoplogin.html" rel="nofollow">登录</a>
                 <a href="shopreg.html" rel="nofollow">注册</a>
@@ -249,6 +249,37 @@
 <script src="jquery/jquery-2.1.1.min.js"></script>
 
 <script type="text/javascript">
+    var strLogin="";
+    function initLogin(){
+
+        $.ajax({
+            //请求方式GET/POST
+            type: "Get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "checkLoginOrNo",
+            success: function (result) {
+                if(result.landName != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"landlord.html\" rel=\"nofollow\">"+result.landName+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }else if(result.username != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"usermain.html\" rel=\"nofollow\">"+result.username+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        })
+    }
+    initLogin();
     function initPage(){
         var shopid = window.location.search.split("=")[1];
         var requestURL = "/shop/listAllShopInfoByShopId?shopid="+shopid;

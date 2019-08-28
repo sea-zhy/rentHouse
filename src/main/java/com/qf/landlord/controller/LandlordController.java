@@ -2,6 +2,7 @@ package com.qf.landlord.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qf.user.pojo.UserInfo;
 import com.qf.landlord.dto.HouseDTO;
 import com.qf.landlord.dto.ShopInfoDTO;
 import com.qf.landlord.pojo.Landlord;
@@ -262,5 +263,15 @@ public class LandlordController {
         return landlordService.getAllEqu();
     }
 
-
+    @RequestMapping("checkLoginOrNo")
+    public Object checkLoginOrNo(HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        if(landlord !=null){
+            return landlord;
+        }else if(userInfo !=null){
+            return userInfo;
+        }
+        return null;
+    }
 }

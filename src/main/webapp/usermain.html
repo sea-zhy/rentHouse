@@ -113,7 +113,30 @@
 <script type="text/javascript" crossorigin="" src="js/Member_Web_User_Message.js"></script>
 <script type="text/javascript">
     var params = window.location.search;
-    var uid = params.split("=")[1];
+    var uid = "";
+    function initUserInfoSession(){
+        $.ajax({
+            //请求方式GET/POST
+            type: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            async: false,
+            //请求地址
+            url: "user/getUserInfoSession",
+            //请求成功
+            success: function (result) {
+                console.log(result);
+                uid = result.uid;
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+    initUserInfoSession();
     function toUser() {
         window.location.href="user.html?uid="+uid;
     }
@@ -144,9 +167,8 @@
             url: "user/outLogin",
             //请求成功
             success: function (result) {
-                console.log(result);
                if(result){
-                   window.location.href="userlogin.html";
+                   window.location.href="shopIndex.html";
                }
             },
             error: function (e) {

@@ -140,7 +140,30 @@
     <script type="text/javascript" crossorigin="" src="js/Member_Web_User_Message.js"></script>
     <script type="text/javascript">
         var params = window.location.search;
-        var uid = params.split("=")[1];
+        var uid = "";
+        function initUserInfoSession(){
+            $.ajax({
+                //请求方式GET/POST
+                type: "GET",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //接受数据类型
+                dataType: "json",
+                async: false,
+                //请求地址
+                url: "user/getUserInfoSession",
+                //请求成功
+                success: function (result) {
+                    console.log(result);
+                    uid = result.uid;
+                },
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            })
+        }
+        initUserInfoSession();
         //通过ajax从后台获取。
         $.ajax({
             //请求方式GET/POST
@@ -170,22 +193,22 @@
         });
 
         function toUser() {
-            window.location.href="user.html?uid="+uid;
+            window.location.href="user.html";
         }
         function toHouse() {
-            window.location.href="userhouse.html?uid="+uid;
+            window.location.href="userhouse.html";
         }
         function toLandlord() {
-            window.location.href="userlandlord.html?uid="+uid;
+            window.location.href="userlandlord.html";
         }
         function toInformation() {
-            window.location.href="userinformation.html?uid="+uid;
+            window.location.href="userinformation.html";
         }
         function helps() {
-            window.location.href="userrenthouse.html?uid="+uid;
+            window.location.href="userrenthouse.html";
         }
         function mains() {
-            window.location.href="usermain.html?uid="+uid;
+            window.location.href="usermain.html";
         }
         function tologin() {
             $.ajax({
@@ -201,7 +224,7 @@
                 success: function (result) {
                     console.log(result);
                     if(result){
-                        window.location.href="login.html";
+                        window.location.href="shopIndex.html";
                     }
                 },
                 error: function (e) {

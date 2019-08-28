@@ -9,6 +9,7 @@ import com.qf.user.toolkit.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -90,5 +91,11 @@ public class UserInfoController {
         mailUtils.run(i);
         System.err.println("i :"+i);
         return i;
+    }
+
+    @RequestMapping("getUserInfoSession")
+    public Object getUserInfoSession(HttpSession session){
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        return userInfo;
     }
 }
