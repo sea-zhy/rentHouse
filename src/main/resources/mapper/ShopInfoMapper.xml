@@ -5,14 +5,14 @@
 <mapper namespace="com.qf.shop.dao.ShopInfoMapper">
     <!--无条件展示-->
     <select id="listAllShopInfo" resultType="com.qf.shop.vo.ShopIndexVO">
-      SELECT s.*,l.landName FROM shopinfo s,landlord l WHERE s.landId = l.landid
+      SELECT s.*,l.landName FROM shopinfo s,landlord l WHERE s.lanId = l.landid
     </select>
 
     <!--选择条件搜索，每次都扫描所有选择条件-->
     <select id="listShopInfoByConditions" parameterType="com.qf.shop.dto.ConditionsDTO" resultType="com.qf.shop.vo.ShopIndexVO">
         SELECT s.*,l.landName FROM shopinfo s,landlord l
         <where>
-            s.landId = l.landid and 1=1
+            s.lanId = l.landid and 1=1
             <if test="provinceId != null and provinceId != ''"> and provinceId = #{provinceId} </if>
             <if test="cityId != null and cityId != ''"> and cityId = #{cityId} </if>
             <if test="areaId != null and areaId != ''"> and areaId = #{areaId} </if>
@@ -24,12 +24,12 @@
     <!--input 条件搜索,模糊查询-->
     <select id="listAllShopInfoByLike" parameterType="String" resultType="com.qf.shop.vo.ShopIndexVO">
         SELECT s.*,l.landName FROM shopinfo s,landlord l
-        WHERE s.landId = l.landid AND title LIKE concat('%',#{keyword},'%')
+        WHERE s.lanId = l.landid AND title LIKE concat('%',#{keyword},'%')
     </select>
 
     <!--由shopid搜索,商铺详细信息-->
     <select id="listAllShopInfoByShopId" parameterType="int" resultType="com.qf.shop.vo.ShopInfoVO">
-      SELECT s.*,l.landName,l.mobile FROM shopinfo s,landlord l WHERE s.landId = l.landid AND s.id=#{id}
+      SELECT s.*,l.landName,l.mobile FROM shopinfo s,landlord l WHERE s.lanId = l.landid AND s.id=#{id}
     </select>
 
     <!--由shopid搜索配套设备-->
@@ -43,7 +43,7 @@
     </select>
 
     <select id="getShopLocation" parameterType="com.qf.shop.vo.ShopLocationVO" resultType="com.qf.shop.vo.ShopIndexVO">
-        SELECT s.*,l.landName FROM shopinfo s,landlord l where 1=1 and s.landId = l.landid
+        SELECT s.*,l.landName FROM shopinfo s,landlord l where 1=1 and s.lanId = l.landid
         <if test="provinceId != null and provinceId != ''">
             and provinceId = #{provinceId}
         </if>

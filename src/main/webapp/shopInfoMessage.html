@@ -38,69 +38,15 @@
 
         <!-- Navigation -->
         <!-- 城市选择start -->
-        <div class="cityselect">
-            <div id="switch_" class="city-view">
-                南京
-            </div>
-        </div>
+
         <!-- 城市选择end -->
 
-        <ul class="navigation" id="navigation">
-            <li class="">
-                <a class="nav-lv1" href="" _soj="navigation">首 页</a>
-            </li>
-            <li class="">
-                <a class="nav-lv1" href="" _soj="navigation">租 房</a>
-            </li>
-            <li class="current">
-                <a class="nav-lv1" href="" _soj="navigation">商铺写字楼</a>
-                <ul class=" sp_xzl_nav" style="width: 1080px;">
-                    <li class="sp_xzl_nav-triangle"><span></span></li>
-                    <li class="sp_xzl_sub_nav" style="">
-                        <h4>商铺</h4>
-                        <ul>
-                            <li>
-                                <a href="https://nj.sydc.anjuke.com/sp-zu/" _soj="navigation">
-                                    商铺出租
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://nj.sydc.anjuke.com/sp-shou/" _soj="navigation">
-                                    商铺出售
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sp_xzl_sub_nav" style="">
-                        <h4>写字楼</h4>
-                        <ul>
-                            <li>
-                                <a href="https://nj.sydc.anjuke.com/xzl-zu/" _soj="navigation">
-                                    写字楼出租
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://nj.sydc.anjuke.com/xzl-shou/" _soj="navigation">
-                                    写字楼出售
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://nj.fang.anjuke.com/xzl/all/w5/" _soj="navigation">
-                                    写字楼新盘
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="">
-                <a class="nav-lv1" href="https://nanjing.anjuke.com/ask/" _soj="navigation">问 答</a>
-            </li>
-        </ul>
-        <div class="nav-right">
-            <div id="user_box" class="userbox">
-                <a href="http://login" rel="nofollow">登录</a>
-                <a href="https://register" rel="nofollow">注册</a>
+
+        <div style="float: right">
+            <div  class="userbox">
+                <i class="icon icon-user"></i>
+                <a href="shoplogin.html" rel="nofollow">登录</a>
+                <a href="shopreg.html" rel="nofollow">注册</a>
             </div>
         </div>
     </div>
@@ -200,7 +146,9 @@
                                 <span class="threeWords">地&nbsp;&nbsp;&nbsp;&nbsp;址</span>
                                 <span>：</span>
                                 <span class="desc addresscommu" title="玄武区长江路碑亭巷">
-                                    玄武区 长江路 碑亭巷
+                                    <a id="provinceId"></a>
+                                    <a id="cityId"></a>
+                                    <a id="areaId"></a>
                                 </span>
                             </li>
                         </ul>
@@ -326,6 +274,9 @@
                 $("#agentPhoneNum").text(result.mobile);//发布人联系电话
                 $("#floor").text(result.floor);//楼层
                 $("#area").text(result.area+" 平方米");//面积
+                $("#provinceId").text(result.provinceId);//省
+                $("#cityId").text(result.cityId);//市
+                $("#areaId").text(result.areaId);//区
                 // $("#shopType").text(result.shopType);//商铺类型
                 // $("#specification").text(result.specification);//规格长宽高
                 // $("#"business_type).text(result.business_type);//商铺性质去掉

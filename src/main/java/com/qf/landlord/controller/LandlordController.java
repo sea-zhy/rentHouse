@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -135,7 +136,10 @@ public class LandlordController {
      * @return
      */
     @RequestMapping("editHouseByHouseId")
-    public Object editHouseByHouseId(@RequestBody HouseDTO houseDTO){
+    public Object editHouseByHouseId(@RequestBody HouseDTO houseDTO,HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
+        houseDTO.setLanId(lanId);
         return landlordService.editHouseByHouseId(houseDTO);
     }
 
@@ -145,7 +149,10 @@ public class LandlordController {
      * @return
      */
     @RequestMapping("editShopInfoByShopId")
-    public Object editShopInfoByShopId(@RequestBody ShopInfoDTO shopInfoDTO){
+    public Object editShopInfoByShopId(@RequestBody ShopInfoDTO shopInfoDTO, HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        int lanId = landlord.getLandId();
+        shopInfoDTO.setLanId(lanId);
         return landlordService.editShopInfoByShopId(shopInfoDTO);
     }
 

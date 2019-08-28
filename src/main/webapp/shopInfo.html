@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="gb2312"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex,nofollow">
+    <script src="jquery/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Message.css" type="text/css">
+    <link rel="stylesheet" rev="stylesheet" href="css/Member_Web_User_Profile.css" type="text/css">
+    <link rel="stylesheet" href="dropzone/basic.min.css" />
+    <link rel="stylesheet" href="dropzone/dropzone.min.css" />
+    <script src="dropzone/dropzone.min.js"></script>
+    <script type="text/javascript" src="js/plugins/citypicker/distpicker.data.js"></script>
+    <script type="text/javascript" src="js/plugins/citypicker/distpicker.js"></script>
+    <title>用户中心－系统消息</title>
+    <style>
+        img{
+            width:50px;
+        }
+        input{
+            width:50px;
+        }
+        td{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-mod">
+    <div class="header clearfix">
+        <div class="logo">
+            <a class="ajk-logo" href="#"></a>
+            <i class="split-icon"></i>
+            <a class="sub-logo" href="#">用户中心</a>
+        </div>
+        <a href="" class="quit">
+            <i class="iconfont quitIcon"></i>
+            <span onclick="loginOut()">退出</span>
+        </a>
+    </div>
+</div>
+
+<div class="headerSub-mod">
+    <div class="headerSub clearfix">
+
+        <div class="user-info">
+            <div class="info-sup clearfix">
+            </div>
+            <div class="info-sub clearfix">
+                <ul>
+                    <li class="user-account">
+
+                    </li>
+                    <i class="split-icon"></i>
+                    <li class="user-type">
+                        <span id="landType"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="content clearfix">
+        <!-- 侧边栏 -->
+        <div class="side-menu">
+            <ul class="menu-list">
+                <li>
+                    <a href="landlord.html" target="_self"><i class="iconfont"></i>个人信息</a>
+                </li>
+                <li>
+                    <a href="houseList.html" target="_self"><i class="iconfont"></i>房源管理</a>
+                </li>
+                <li>
+                    <a href="shopList.html" target="_self"><i class="iconfont"></i>商铺管理</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right-content">
+            <div class="right-cont">
+                <ul class="tab-list clearfix">
+                    <li onclick="">房屋发布/修改</li>
+                </ul>
+                <div class="no-msg">
+                    <br/><br/><br/>
+                    <div>
+                        <table id="houseTable" border="1" cellpadding="0" cellspacing="0" align="center" width="750px">
+
+                            <tr>
+                                <td>所在地：<span id="areaInfo"></span></td>
+                                <td>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <div data-toggle="distpicker">
+
+                                                <div class="form-group area" style=" float:left;">
+                                                    <select class="form-control" id="province1"></select>
+                                                </div>
+                                                <div class="form-group area" style=" float:left;">
+                                                    <select class="form-control" id="city1"></select>
+                                                </div>
+                                                <div class="form-group area" style=" float:left;">
+                                                    <select class="form-control" id="district1"></select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td> <button onclick="edit()">修改地址</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    商业类型:<input id="business_type">
+                                </td>
+                                <td>
+                                    起租时间:<select id="rentDate">
+                                    <option value="半年起租">半年起租</option>
+                                    <option value="一年起租">一年起租</option>
+                                    <option value="三年起租">三年起租</option>
+                                    <option value="其它">其它</option>
+                                </select>
+                                </td>
+                                <td>
+                                    楼层:<input id="floor">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    面积:<input id="area">
+                                </td>
+                                <td>
+                                    租金:<input id="price">
+                                    付款方式:<select id="pay_type">
+                                    <option value="押一付一">押一付一</option>
+                                    <option value="押一付三">押一付三</option>
+                                    <option value="半年一付">半年一付</option>
+                                    <option value="一年一付">一年一付</option>
+                                </select>
+                                </td>
+                                <td>
+                                    物业:<input id="property">
+                                </td>
+                            </tr>
+
+
+
+                            <tr >
+                                <td id="equipment" colspan="3">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    联系人:<input id="contactName">
+                                    电  话:<input id="conMobile">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" id="shopImg">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <div class="dropzone" id="imgUpload" style="width: 200px;margin: 0 auto">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    标题:<input id="title"style="width: 500px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    房屋简介:<br/>
+                                    <textarea cols="50" rows="20" id="info"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <button onclick="refresh()">修改</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+<script>
+    var shopId = window.location.search.split("=").pop();
+
+    $("#province1").bind("change",
+        function(){
+            var province=$("#province1").val();
+        }
+    );
+
+
+    function init(){
+        if(shopId==""){
+            $.ajax({
+                type: "GET",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //返回数据格式
+                dataType: "json",
+                //请求地址
+                url: "http://localhost:8080/getAllEqu",
+                //请求成功
+                success: function (result) {
+                    console.log(result)
+                    var str = "配套设施:";
+                    $(result).each(function(index,item){
+                        str += "<input type='checkbox' value='"+item.id+"'>"+item.name
+                    })
+                    $("#equipment").append(str)
+
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            })
+        }else{
+            $.ajax({
+                type: "GET",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //返回数据格式
+                dataType: "json",
+                //请求地址
+                url: "http://localhost:8080/getEquipmentShopById?shopId="+shopId,
+                //请求成功
+                success: function (result) {
+                    $("#areaInfo").text(result.provinceId+result.cityId+result.areaId);
+                    $("#business_type").val(result.business_type);
+                    $("#rentDate").val(result.rentDate);
+                    $("#floor").val(result.floor);
+                    $("#area").val(result.area);
+                    $("#price").val(result.price);
+                    $("#pay_type").val(result.pay_type);
+                    $("#property").val(result.property);
+                    $("#contactName").val(result.contact.conName);
+                    $("#conMobile").val(result.contact.mobile);
+                    $("#title").val(result.title);
+                    $("#info").text(result.info);
+                    var str = "配套设施";
+                    $(result.equipmentList).each(function(index,item){
+                        if(item.checked==true){
+                            str += "<input type='checkbox' checked='checked' value='"+item.id+"'>"+item.name;
+                        }else{
+                            str += "<input type='checkbox'value='"+item.id+"'>"+item.name;
+                        }
+                    })
+                    $("#equipment").html(str);
+
+                    if(result.imgList!=null){
+                        var strImg = "商铺图片";
+                        $(result.imgList).each(function(index,item){
+                            strImg += "<img src="+item.img_url+">"
+                        })
+                        $("#shopImg").append(strImg)
+                    }
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            })
+        }
+
+    }
+    init();
+    //修改地址
+    function edit(){
+        $.ajax({
+            type: "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //返回数据格式
+            dataType: "json",
+            //请求地址
+            url: "http://localhost:8080/editShopArea",
+            data:JSON.stringify({
+                "id":shopId,
+                "provinceId":$("#province1").val(),
+                "cityId":$("#city1").val(),
+                "areaId":$("#district1").val()
+            }),
+            //请求成功
+            success: function (result) {
+                window.location.reload();
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+
+
+    function refresh(){
+        var equipmentList = new Array();
+        $("input:checkbox:checked").each(function(index,item){
+            var equipment = {
+                id:item.value,
+                name:item.nextSibling.nodeValue
+            }
+            equipmentList.push(equipment);
+        })
+        var imgList = new Array();
+        $("#shopImg img").each(function(index,item){
+            var img = {"img_url":$(item).attr("src")}
+            imgList.push(img);
+        })
+        var url;
+        if(shopId!=""){
+            url = "http://localhost:8080/editShopInfoByShopId"
+        }else{
+            url = "http://localhost:8080/addShopNew";
+        }
+        if(shopId==""){
+            $.ajax({
+                type: "POST",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //返回数据格式
+                dataType: "json",
+                //请求地址
+                url: url,
+                data:JSON.stringify({
+                    "lanId":2,
+                    "title":$("#title").val(),
+                    "info":$("#info").val(),
+                    "provinceId":$("#province1").val(),
+                    "cityId":$("#city1").val(),
+                    "areaId":$("#district1").val(),
+                    "business_type":$("#business_type").val(),
+                    "rentDate":$("#rentDate").val(),
+                    "floor":$("#floor").val(),
+                    "area":$("#area").val(),
+                    "price":$("#price").val(),
+                    "pay_type":$("#pay_type").val(),
+                    "property":$("#property").val(),
+                    "equipmentList":equipmentList,
+                    "contact":{
+                        "conName":$("#contactName").val(),
+                        "mobile":$("#conMobile").val()
+                    },
+                    "imgList":imgList
+                }),
+                //请求成功
+                success: function (result) {
+                    alert("添加成功");
+                    window.location.href="shopList.html";
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            })
+        }else{
+            $.ajax({
+                type: "POST",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //返回数据格式
+                dataType: "json",
+                //请求地址
+                url: url,
+                data:JSON.stringify({
+                    "id":shopId,
+                    "title":$("#title").val(),
+                    "info":$("#info").val(),
+                    "business_type":$("#business_type").val(),
+                    "rentDate":$("#rentDate").val(),
+                    "floor":$("#floor").val(),
+                    "area":$("#area").val(),
+                    "price":$("#price").val(),
+                    "pay_type":$("#pay_type").val(),
+                    "property":$("#property").val(),
+                    "equipmentList":equipmentList,
+                    "contact":{
+                        "conName":$("#contactName").val(),
+                        "mobile":$("#conMobile").val()
+                    },
+                    "imgList":imgList
+                }),
+                //请求成功
+                success: function (result) {
+                    alert("修改成功");
+                    window.location.href="shopList.html";
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            })
+        }
+
+    }
+
+    Dropzone.options.imgUpload = {
+        url: "uploadIcon", // 文件提交地址
+        method: "post",  // 也可用put
+        paramName: "dropzFile", // 默认为file
+        maxFiles: 5,// 一次性上传的文件数量上限
+        maxFilesize: 2, // 文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png,.jpeg,.txt,.doc,.docx", // 上传的类型
+        addRemoveLinks: true,
+        parallelUploads: 1,// 一次上传的文件数量
+        //previewsContainer:"#preview", // 上传图片的预览窗口
+        dictDefaultMessage: '跟换商铺图片',
+        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg,.txt,.doc,.docx。",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+        init: function () {
+            this.on("addedfile", function (file) {
+                // 上传文件时触发的事件
+            });
+            this.on("success", function (file, data) {
+                // 上传成功触发的事件
+                var strImg = "<img src='"+data.fileName+"'>";
+                $("#shopImg").append(strImg);
+            });
+            this.on("error", function (file, data) {
+                // 上传失败触发的事件
+                console.error();
+            });
+            this.on("removedfile", function (file) {
+                // 删除文件时触发的方法
+            });
+        }
+    }
+
+</script>
+
+</html>
+
+

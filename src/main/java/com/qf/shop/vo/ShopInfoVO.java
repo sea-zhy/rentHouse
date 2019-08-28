@@ -20,4 +20,7 @@ public class ShopInfoVO {
     String rentDate;
     String landName;
     String mobile;
+    String provinceId;
+    String cityId;
+    String areaId;
 }

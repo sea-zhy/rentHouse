@@ -62,7 +62,7 @@ public class PayController {
                 request.setAttribute("reuslt", "trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
                 boolean flg = payService.editUpTimeStatus(out_trade_no);
                 if(flg){
-                    return "landlord";
+                    return "successPay";
                 }else{
                     return "payResult";
                 }
