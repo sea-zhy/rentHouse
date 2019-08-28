@@ -25,9 +25,7 @@
             <!-- 用户登录 -->
             <div class="userlogin userblock">
                 <i class="icon icon-people"></i>
-                <a class="link"
-                   href="shoplogin.html"
-                   rel="nofollow">登录</a>
+                <a class="link" href="shoplogin.html" rel="nofollow">登录</a>
                 <a class="link" href="shopreg.html" rel="nofollow">注册</a>
             </div>
         </div>
@@ -63,17 +61,17 @@
 <div class="nav header-center clearfix">
     <ul>
         <li>
-            <a href="shopIndex.html" _soj="navigation" class="current" target="$item.target">
+            <a href="shopIndex.html" target="_blank">
                 商铺出租
             </a>
         </li>
         <li>
-            <a href="#" _soj="navigation" class="" target="$item.target">
+            <a href="houseIndex.html" target="_blank">
                 房屋出租
             </a>
         </li>
         <li>
-            <a href="#" _soj="navigation" class="" target="$item.target">
+            <a href="shopinit.html" target="_blank">
                 求租信息
             </a>
         </li>
@@ -300,7 +298,7 @@
                 $(result).each(function (index, item) {
                     //获取id并拼接
                     tdStr += "<div class='list-item' style='position: relative;'>";
-                    tdStr += "<img src=\"img/220x165c.jpg\" class=\"item-img\" width=\"180\" height=\"135\">";
+                    tdStr += "<img src=\""+item.icon+"\" class=\"item-img\" width=\"180\" height=\"135\">";
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
@@ -365,7 +363,7 @@
                 $(result).each(function (index, item) {
                     //获取id并拼接
                     tdStr += "<div class='list-item' style='position: relative;'>";
-                    tdStr += "<img src=\"img/220x165c.jpg\" class=\"item-img\" width=\"180\" height=\"135\">";
+                    tdStr += "<img src=\""+item.icon+"\" class=\"item-img\" width=\"180\" height=\"135\">";
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
@@ -429,7 +427,7 @@
                 $(result).each(function (index, item) {
                     //获取id并拼接
                     tdStr += "<div class='list-item' style='position: relative;'>";
-                    tdStr += "<img src=\"img/220x165c.jpg\" class=\"item-img\" width=\"180\" height=\"135\">";
+                    tdStr += "<img src=\""+item.icon+"\" class=\"item-img\" width=\"180\" height=\"135\">";
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
@@ -487,7 +485,7 @@
                 $(result.list).each(function (index, item) {
                     //获取id并拼接
                     tdStr += "<div class='list-item' style='position: relative;'>";
-                    tdStr += "<img src=\"img/220x165c.jpg\" class=\"item-img\" width=\"180\" height=\"135\">";
+                    tdStr += "<img src=\""+item.icon+"\" class=\"item-img\" width=\"180\" height=\"135\">";
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";
@@ -559,7 +557,7 @@
                 $(result.list).each(function (index, item) {
                     //获取id并拼接
                     tdStr += "<div class='list-item' style='position: relative;'>";
-                    tdStr += "<img src=\"img/220x165c.jpg\" class=\"item-img\" width=\"180\" height=\"135\">";
+                    tdStr += "<img src=\""+item.icon+"\" class=\"item-img\" width=\"180\" height=\"135\">";
                     tdStr += "<div class=\"icon-wrapper\">";
                     tdStr += "</div>";
                     tdStr += "<dl class=\"item-info\">";

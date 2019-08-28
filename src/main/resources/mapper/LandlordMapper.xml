@@ -7,10 +7,10 @@
     <!--添加新出租屋及其相关信息-->
     <insert id="addHouseNew" parameterType="com.qf.landlord.dto.HouseDTO">
         insert into house(provinceId,cityId,areaId,community,build,unit,num,room,hall,toilet,level,allLevel,elevator,area,housingType,
-        decorate,toward,rent,payType,roomType,roomToward,roomArea,title,info,upTime,lanId)
+        decorate,toward,rent,payType,roomType,roomToward,roomArea,title,info,upTime,lanId,icon)
         values(#{provinceId},#{cityId},#{areaId},#{community},#{build},#{unit},#{num},#{room},#{hall},#{toilet},#{level},#{allLevel},
         #{elevator},#{area},#{housingType},#{decorate},#{toward},#{rent},#{payType},#{roomType},#{roomToward},
-        #{roomArea},#{title},#{info},#{upTime},#{lanId})
+        #{roomArea},#{title},#{info},#{upTime},#{lanId},#{icon})
         <selectKey keyProperty="houseId" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>

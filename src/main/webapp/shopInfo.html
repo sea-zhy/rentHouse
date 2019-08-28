@@ -335,6 +335,7 @@
         }else{
             url = "http://localhost:8080/addShopNew";
         }
+        console.log(imgList[0])
         if(shopId==""){
             $.ajax({
                 type: "POST",
@@ -359,6 +360,7 @@
                     "pay_type":$("#pay_type").val(),
                     "property":$("#property").val(),
                     "equipmentList":equipmentList,
+                    "icon":imgList[0].img_url,
                     "contact":{
                         "conName":$("#contactName").val(),
                         "mobile":$("#conMobile").val()
@@ -397,6 +399,7 @@
                     "pay_type":$("#pay_type").val(),
                     "property":$("#property").val(),
                     "equipmentList":equipmentList,
+                    "icon":imgList[0].img_url,
                     "contact":{
                         "conName":$("#contactName").val(),
                         "mobile":$("#conMobile").val()

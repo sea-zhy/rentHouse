@@ -29,6 +29,7 @@ public class HouseDTO {
     private String decorate;
     private String toward;
     private int rent;
+    private String icon;
     private String payType;
     private String roomType;
     private String roomToward;
@@ -136,6 +137,14 @@ public class HouseDTO {
 
     public void setToilet(int toilet) {
         this.toilet = toilet;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public int getLevel() {
@@ -297,4 +306,5 @@ public class HouseDTO {
     public void setFacilitiesList(List<Facilities> facilitiesList) {
         this.facilitiesList = facilitiesList;
     }
+
 }
