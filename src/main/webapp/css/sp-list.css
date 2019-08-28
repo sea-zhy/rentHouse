@@ -28,7 +28,7 @@ select, input {
 input[type="reset"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="file"]>input[type="button"]::-moz-focus-inner {
     border:0;
     padding:0;
-    margin-bottom:0;
+    margin-bottom:
 }
 textarea {
     resize:none
@@ -67,16 +67,16 @@ a {
 a:hover {
     color:#666
 }
-/*.clearfix:after {*/
-    /*content:'.';*/
-    /*display:block;*/
-    /*height:0;*/
-    /*clear:both;*/
-    /*visibility:hidden*/
-/*}*/
-/*.clearfix {*/
-    /**+height:1%*/
-/*}*/
+.clearfix:after {
+    content:'.';
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden
+}
+.clearfix {
+    *+height:1%
+}
 .triangle-down {
     width:0;
     height:0;
@@ -632,36 +632,36 @@ input::-webkit-input-placeholder {
     margin:3px 0 5px;
     padding:0
 }
-/*.userblock ul a {*/
-    /*color:#666;*/
-    /*margin:*/
-/*}*/
-/*.userblock ul a:hover {*/
-    /*color:#f60*/
-/*}*/
-/*.userblock ul em {*/
-    /*color:#f60;*/
-    /*margin-left:5px*/
-/*}*/
-/*.userblock .triangle-down {*/
-    /*margin:2px 0 0 5px*/
-/*}*/
-/*.userlogin .icon-people {*/
-    /*vertical-align:top;*/
-    /*margin:0 4px 0 0;*/
-    /*width:18px;*/
-    /*height:18px*/
-/*}*/
-/*.userbox ul {*/
-    /*left:-32px!important*/
-/*}*/
-/*.userfavorite .icon-love {*/
-    /*vertical-align:top;*/
-    /*margin:0 4px 0 0*/
-/*}*/
-/*.userfavorite .link {*/
-    /*margin-right:0*/
-/*}*/
+.userblock ul a {
+    color:#666;
+    margin:
+}
+.userblock ul a:hover {
+    color:#f60
+}
+.userblock ul em {
+    color:#f60;
+    margin-left:5px
+}
+.userblock .triangle-down {
+    margin:2px 0 0 5px
+}
+.userlogin .icon-people {
+    vertical-align:top;
+    margin:0 4px 0 0;
+    width:18px;
+    height:18px
+}
+.userbox ul {
+    left:-32px!important
+}
+.userfavorite .icon-love {
+    vertical-align:top;
+    margin:0 4px 0 0
+}
+.userfavorite .link {
+    margin-right:0
+}
 .header {
     height:62px
 }
@@ -1683,7 +1683,6 @@ ul[class="parent-3 btn-show"] {
     text-align:right;
     _display:inline
 }
-
 .list-item .item-info {
     width:485px;
     float:left
@@ -1711,7 +1710,7 @@ ul[class="parent-3 btn-show"] {
     text-overflow:ellipsis;
     white-space:nowrap;
     margin-right:0;
-    /*_width:expression((document.documentElement.clientWidth||document.body.clientWidth)>342?"342":"auto")*/
+    _width:expression((document.documentElement.clientWidth||document.body.clientWidth)>342?"342":"auto")
 }
 .list-item .item-info .address a {
     font-weight:normal;
