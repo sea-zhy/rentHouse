@@ -514,7 +514,26 @@
 					});
 				}
 			}
-
+			function loginOut(){
+				$.ajax({
+					type: "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//返回数据格式
+					dataType: "json",
+					//请求地址
+					url: "http://localhost:8080/loginOut",
+					//请求成功
+					success: function(result) {
+						window.location.href="shopIndex.html";
+					},
+					//请求失败，包含具体的错误信息
+					error: function(e) {
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			}
 		</script>
 
 </html>

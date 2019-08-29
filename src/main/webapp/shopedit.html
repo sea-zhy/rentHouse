@@ -124,7 +124,7 @@
                         </div>
                         <div class="form-group">
                             <label >房屋照片</label>
-                            <input type="text" class="form-control" id="icon" value="test">
+                            <img id="icon" style="width: 100px;">
                         </div>
                         <div class="form-group">
                             <label >商铺类型</label>
@@ -218,7 +218,7 @@
             $("#id").val(result.id);
             $("#title").val(result.title);
             $("#price").val(result.price);
-            $("#icon").val(result.icon);
+            $("#icon").attr("src",result.icon);
             $("#shopType").val(result.shopType);
             $("#pay_type").val(result.pay_type);
             $("#area").val(result.area);
