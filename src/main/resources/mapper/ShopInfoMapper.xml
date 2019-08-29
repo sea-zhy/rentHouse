@@ -5,7 +5,7 @@
 <mapper namespace="com.qf.shop.dao.ShopInfoMapper">
     <!--无条件展示-->
     <select id="listAllShopInfo" resultType="com.qf.shop.vo.ShopIndexVO">
-      SELECT s.*,l.landName FROM shopinfo s,landlord l WHERE s.lanId = l.landid
+      SELECT s.*,l.landName FROM shopinfo s,landlord l WHERE s.lanId = l.landid ORDER BY status DESC
     </select>
 
     <!--选择条件搜索，每次都扫描所有选择条件-->
@@ -19,12 +19,14 @@
             <if test="minArea !=0 and maxArea !=0">  and area &gt; #{minArea} and area &lt; #{maxArea} </if>
             <if test="minPrice !=0 and maxPrice != 0">  and price &gt; #{minPrice} and price &lt; #{maxPrice} </if>
         </where>
+        ORDER BY status DESC
     </select>
 
     <!--input 条件搜索,模糊查询-->
     <select id="listAllShopInfoByLike" parameterType="String" resultType="com.qf.shop.vo.ShopIndexVO">
         SELECT s.*,l.landName FROM shopinfo s,landlord l
         WHERE s.lanId = l.landid AND title LIKE concat('%',#{keyword},'%')
+        ORDER BY status DESC
     </select>
 
     <!--由shopid搜索,商铺详细信息-->

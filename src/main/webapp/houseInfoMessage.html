@@ -68,10 +68,10 @@
             </li>
         </ul>
         <div style="float: right">
-            <div id="user_box" class="userbox" id="checkLoginOrNo">
+            <div  class="userbox" class="userbox" id="checkLoginOrNo">
                 <i class="icon icon-user"></i>
-                <a href="http://login" rel="nofollow">登录</a>
-                <a href="https://register" rel="nofollow">注册</a>
+                <a href="shoplogin.html" rel="nofollow">登录</a>
+                <a href="shopreg.html" rel="nofollow">注册</a>
             </div>
         </div>
     </div>
@@ -265,6 +265,12 @@
                         <a class="agent">电&ensp;&ensp;话：</a>
                         <a id="agentPhoneNum" class="agent"></a>
                     </div>
+                    <div id="focusH">
+                        <button onclick="focusHouse()">关注该房源</button>
+                    </div>
+                    <div id="focusL">
+                        <button onclick="focusLandlord()">关注该房东</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -275,53 +281,24 @@
 <script src="jquery/jquery-2.1.1.min.js"></script>
 
 <script type="text/javascript">
-    var strLogin="";
-    function initLogin(){
+    var landid="";
+    var houseid = window.location.search.split("=")[1];
 
-        $.ajax({
-            //请求方式GET/POST
-            type: "Get",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            //接受数据类型
-            dataType: "json",
-            //请求地址
-            url: "checkLoginOrNo",
-            success: function (result) {
-                if(result.landName != undefined){
-                    strLogin += "<i class=\"icon icon-people\"></i>";
-                    strLogin += "<a class=\"link\" href=\"landlord.html\" rel=\"nofollow\">"+result.landName+"</a>";
-                    $("#checkLoginOrNo").html("");
-                    $("#checkLoginOrNo").append(strLogin);
-                }else if(result.username != undefined){
-                    strLogin += "<i class=\"icon icon-people\"></i>";
-                    strLogin += "<a class=\"link\" href=\"usermain.html\" rel=\"nofollow\">"+result.username+"</a>";
-                    $("#checkLoginOrNo").html("");
-                    $("#checkLoginOrNo").append(strLogin);
-                }
-            },
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        })
-    }
-    initLogin();
     <!--详细信息-->
+
     function initPage(){
-        var houseid = window.location.search.split("=")[1];
+
         console.log(houseid)
         var requestURL = "/SelectHouse?houseid="+houseid;
         $.ajax({
             type : "GET",
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
+            async:false,
             dataType:"json",
             url : requestURL,
             success : function(result) {
                 console.log(result);
-                console.log(result[0].title);
-                //给页面赋值
-
                 $("#tit-name").text(result[0].title);//标题
                 $("#price").text(result[0].rent+" 元/月");//月租
                 $("#pay_type").text(result[0].payType);//租付类型，押一付三
@@ -329,6 +306,7 @@
                 $("#property").text(result[0].toward);//物业
                 $("#address").text(result[0].address);//地址
                 $("#info").text(result[0].info);//简介
+                landid=result[0].lanId;
                 $("#agentName").text(result[0].landName);//发布人姓名
                 $("#agentPhoneNum").text(result[0].mobile);//发布人联系电话
                 $("#floor").text(result[0].level+" 楼");//楼层
@@ -353,9 +331,48 @@
         });
     }
     initPage();
-</script>
-<!--根据Id查询详情配置-->
-<script type="text/javascript">
+
+    function initFocus(){
+        var strHouse="";
+        var strLand="";
+        $.ajax({
+            type : "Post",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            url : "user/focusInit",
+            data:JSON.stringify({
+                "houseid":houseid,
+                "landid":landid
+            }),
+            success : function(result) {
+                console.log(result)
+                if(result != false){
+                    if(result.houseid==0){
+                        strHouse += "<button onclick=\"focusHouse()\">关注该房源</button>"
+                    }else{
+                        strHouse += "<button>房源已被关注</button>"
+                    }
+                    $("#focusH").html("");
+                    $("#focusH").append(strHouse);
+                    if(result.landid==0){
+                        strLand += "<button onclick=\"focusLandlord()\">关注该房东</button>"
+                    }else{
+                        strLand += "<button >房东已被关注</button>"
+                    }
+                    $("#focusL").html("");
+                    $("#focusL").append(strLand)
+                }
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+    initFocus();
     function equipments(){
         var houseId = window.location.search.split("=")[1];
         var requestURL = "/SelectFacilities?houseid="+houseId;
@@ -387,9 +404,7 @@
         });
     }
     equipments();
-</script>
 
-<script>
     function imgs(){
         var houseId = window.location.search.split("=")[1];
         var requestURL = "SelectImg?houseid="+houseId;
@@ -428,6 +443,81 @@
         });
     }
     imgs();
+    function focusHouse(){
+        $.ajax({
+            type: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            url: "user/addhouse?houseid="+houseid,
+            success: function (result) {
+                console.log(result);
+                if(result == false){
+                    window.location.href="userlogin.html"
+                }else{
+                    window.location.reload();
+                }
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+    function focusLandlord(){
+        console.log(landid+"111")
+        $.ajax({
+            type: "GET",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            url: "user/addUserLandFocus?landid="+landid,
+            success: function (result) {
+                console.log(result);
+                if(result == false){
+                    window.location.href="userlogin.html"
+                }else{
+                    window.location.reload();
+
+                }
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+    var strLogin = "";
+    function initLogin(){
+        $.ajax({
+            //请求方式GET/POST
+            type: "Get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //接受数据类型
+            dataType: "json",
+            //请求地址
+            url: "checkLoginOrNo",
+            success: function (result) {
+                if(result.landName != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"landlord.html\" rel=\"nofollow\">"+result.landName+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }else if(result.username != undefined){
+                    strLogin += "<i class=\"icon icon-people\"></i>";
+                    strLogin += "<a class=\"link\" href=\"usermain.html\" rel=\"nofollow\">"+result.username+"</a>";
+                    $("#checkLoginOrNo").html("");
+                    $("#checkLoginOrNo").append(strLogin);
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        })
+    }
+    initLogin();
+
 </script>
 </body>
 </html>

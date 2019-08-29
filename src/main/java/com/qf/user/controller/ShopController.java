@@ -1,12 +1,11 @@
 package com.qf.user.controller;
 
 import com.qf.landlord.pojo.Landlord;
+import com.qf.user.pojo.UserInfo;
+import com.qf.user.pojo.UserLand;
 import com.qf.user.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -43,4 +42,25 @@ public class ShopController {
         session1.removeAttribute("landlord");
         return true;
     }
+
+    /**
+     * 用户房东关注
+     * @param landid
+     * @param session
+     * @return
+     */
+    @RequestMapping("addUserLandFocus")
+    public Object addUserLandFocus(@RequestParam String landid, HttpSession session){
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        if(userInfo ==null){
+            return false;
+        }
+        System.out.println(landid );
+        UserLand userLand = new UserLand();
+        userLand.setUid(userInfo.getUid());
+        userLand.setLandid(Integer.parseInt(landid));
+        System.out.println(userLand);
+        return shopService.addUserLandFocus(userLand);
+    }
+
 }

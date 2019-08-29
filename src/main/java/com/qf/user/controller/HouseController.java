@@ -2,10 +2,14 @@ package com.qf.user.controller;
 
 import com.qf.user.pojo.House;
 import com.qf.user.pojo.HouseUserInfo;
+import com.qf.user.pojo.UserInfo;
 import com.qf.user.service.HouseService;
+import com.qf.user.vo.FocusLandAndHouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @CrossOrigin
@@ -38,5 +42,15 @@ public class HouseController {
     @RequestMapping("mapByhouseId")
     public House mapByhouseId(@RequestParam int houseId){
         return houseService.mapByhouseId(houseId);
+    }
+
+    @RequestMapping("focusInit")
+    public Object focusInit(@RequestBody FocusLandAndHouse focusLandAndHouse, HttpSession session){
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        if(userInfo == null){
+            return false;
+        }
+        focusLandAndHouse.setUid(userInfo.getUid());
+        return houseService.focusInit(focusLandAndHouse);
     }
 }

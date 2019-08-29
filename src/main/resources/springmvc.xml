@@ -37,13 +37,13 @@
     </bean>
 
     <!--配置拦截器集合-->
-    <!--<mvc:interceptors>
-        &lt;!&ndash;—配置登录拦截器&ndash;&gt;
+    <mvc:interceptors>
+        <!--—配置登录拦截器-->
         <mvc:interceptor>
             <mvc:mapping path="/*.html"/>
-            <bean class="com.zhy.filter.LoginFilter"/>
+            <bean class="com.qf.filter.LoginFilter"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+    </mvc:interceptors>
 
 
 </beans>

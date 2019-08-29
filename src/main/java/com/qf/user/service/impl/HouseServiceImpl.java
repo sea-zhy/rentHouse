@@ -3,7 +3,9 @@ package com.qf.user.service.impl;
 import com.qf.user.dao.HouseMapper;
 import com.qf.user.pojo.House;
 import com.qf.user.pojo.HouseUserInfo;
+import com.qf.user.pojo.UserLand;
 import com.qf.user.service.HouseService;
+import com.qf.user.vo.FocusLandAndHouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,22 @@ public class HouseServiceImpl implements HouseService {
     //根据houseId查询房屋的信息mapByhouseId
     public House mapByhouseId(int houseId){
         return houseMapper.mapByhouseId(houseId);
+    }
+
+    @Override
+    public FocusLandAndHouse focusInit(FocusLandAndHouse focusLandAndHouse) {
+        HouseUserInfo houseUserInfo = houseMapper.getFocusHouseId(focusLandAndHouse);
+        if(houseUserInfo==null){
+            focusLandAndHouse.setHouseid(0);
+        }else{
+            focusLandAndHouse.setHouseid(houseUserInfo.getHouseid());
+        }
+        UserLand userLand = houseMapper.getFocus(focusLandAndHouse);
+        if(userLand == null){
+            focusLandAndHouse.setLandid(0);
+        }else{
+            focusLandAndHouse.setLandid(userLand.getLandid());
+        }
+        return focusLandAndHouse;
     }
 }

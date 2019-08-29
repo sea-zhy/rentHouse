@@ -1,6 +1,9 @@
 package com.qf.user.dao;
 import com.qf.user.pojo.House;
 import com.qf.user.pojo.HouseUserInfo;
+import com.qf.user.pojo.UserLand;
+import com.qf.user.vo.FocusLandAndHouse;
+
 import java.util.List;
 
 public interface HouseMapper {
@@ -12,4 +15,6 @@ public interface HouseMapper {
     public int deleteHouse(HouseUserInfo houseUserInfo);
     //根据houseId查询房屋的信息mapByhouseId
     public House mapByhouseId(int houseId);
+    HouseUserInfo getFocusHouseId(FocusLandAndHouse focusLandAndHouse);
+    UserLand getFocus(FocusLandAndHouse focusLandAndHouse);
 }

@@ -23,4 +23,10 @@
         select provinceId,cityId,areaId,community from house where houseId=#{houseId}
     </select>
 
+    <select id="getFocusHouseId" parameterType="com.qf.user.vo.FocusLandAndHouse" resultType="com.qf.user.pojo.HouseUserInfo">
+        select * from house_userinfo where uid=#{uid} and houseid =#{houseid}
+    </select>
+    <select id="getFocus" parameterType="com.qf.user.vo.FocusLandAndHouse" resultType="com.qf.user.pojo.UserLand">
+        select * from userinfo_landlord where uid=#{uid} and landid=#{landid}
+    </select>
 </mapper>

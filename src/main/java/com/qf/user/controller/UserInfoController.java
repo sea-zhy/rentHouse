@@ -46,7 +46,14 @@ public class UserInfoController {
 
     //关注房源
     @RequestMapping("addhouse")
-    public Object addhouse(@RequestBody UFHouse ufHouse){
+    public Object addhouse(@RequestParam int houseid,HttpSession session){
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        if(userInfo ==null){
+            return false;
+        }
+        UFHouse ufHouse = new UFHouse();
+        ufHouse.setHouseid(houseid);
+        ufHouse.setUid(userInfo.getUid());
         return userInfoService.addhouse(ufHouse);
     }
     //根据UID查询信息initByUid

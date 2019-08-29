@@ -2,6 +2,7 @@ package com.qf.landlord.controller;
 
 import com.alipay.api.internal.util.AlipaySignature;
 import com.qf.landlord.pay.AlipayConfig;
+import com.qf.landlord.pojo.Landlord;
 import com.qf.landlord.pojo.OrderForm;
 import com.qf.landlord.service.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -81,7 +83,12 @@ public class PayController {
 
     @ResponseBody
     @RequestMapping("generateOrder")
-    public Object generateOrder(@RequestBody OrderForm orderForm){
+    public Object generateOrder(@RequestBody OrderForm orderForm, HttpSession session){
+        Landlord landlord = (Landlord)session.getAttribute("landlord");
+        if(landlord==null){
+            return "未登录,<a href='shoplogin.html'>请登录</a>";
+        }
+        orderForm.setLandId(landlord.getLandId());
         OrderForm orderFormNew = payService.generateOrder(orderForm);
         String result = payService.payStart(orderFormNew);
         return result;

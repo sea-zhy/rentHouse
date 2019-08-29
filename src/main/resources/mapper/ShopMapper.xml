@@ -16,4 +16,8 @@
         insert into landlord(landid,landName,password,account,email,mobile,icon,landType)
         values(default,#{landName},#{password},#{account},#{email},#{mobile},#{icon},#{landType})
     </insert>
+    <!--添加用户房东关注-->
+    <insert id="addUserLandFocus" parameterType="com.qf.user.pojo.UserLand">
+        insert into userinfo_landlord(uid,landid) values(#{uid},#{landid})
+    </insert>
 </mapper>

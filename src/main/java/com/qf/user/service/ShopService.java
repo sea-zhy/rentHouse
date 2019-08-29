@@ -2,6 +2,7 @@ package com.qf.user.service;
 
 
 import com.qf.landlord.pojo.Landlord;
+import com.qf.user.pojo.UserLand;
 
 public interface ShopService {
 
@@ -11,4 +12,5 @@ public interface ShopService {
     public boolean landNameIsExists(Landlord landlord);
     //注册registerLandlord
     public boolean registerLandlord(Landlord landlord);
+    boolean addUserLandFocus(UserLand userLand);
 }

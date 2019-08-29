@@ -2,6 +2,7 @@ package com.qf.user.service;
 
 import com.qf.user.pojo.House;
 import com.qf.user.pojo.HouseUserInfo;
+import com.qf.user.vo.FocusLandAndHouse;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface HouseService {
     public boolean deleteHouse(HouseUserInfo houseUserInfo);
     //根据houseId查询房屋的信息mapByhouseId
     public House mapByhouseId(int houseId);
+    FocusLandAndHouse focusInit(FocusLandAndHouse focusLandAndHouse);
 }

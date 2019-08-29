@@ -2,6 +2,7 @@ package com.qf.user.service.impl;
 
 import com.qf.user.dao.ShopMapper;
 import com.qf.landlord.pojo.Landlord;
+import com.qf.user.pojo.UserLand;
 import com.qf.user.service.ShopService;
 import com.qf.user.toolkit.Md5;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class ShopServiceImpl implements ShopService {
         String pwd = Md5.encodePassword(landlord.getPassword());
         landlord.setPassword(pwd);
         return shopMapper.registerLandlord(landlord)>0;
+    }
+
+    @Override
+    public boolean addUserLandFocus(UserLand userLand) {
+        return shopMapper.addUserLandFocus(userLand)>0;
     }
 }
