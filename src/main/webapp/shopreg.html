@@ -86,7 +86,7 @@
             <a href="userreg.html">用户注册</a>
         </label>
         </div>
-        <a class="btn btn-lg btn-success btn-block" onclick="registerUser()"> 注册</a>
+        <button class="btn btn-lg btn-success btn-block" onclick="registerUser()"> 注册</button>
     </form>
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
@@ -245,7 +245,6 @@
             }),
             //请求成功
             success : function(result) {
-                alert(result)
                 if(result){
                     alert("用户名已经存在，请从新输入");
                     window.location.reload();
