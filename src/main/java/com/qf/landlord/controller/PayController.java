@@ -90,6 +90,9 @@ public class PayController {
         }
         orderForm.setLandId(landlord.getLandId());
         OrderForm orderFormNew = payService.generateOrder(orderForm);
+        if(orderFormNew == null){
+            return "订单生成失败";
+        }
         String result = payService.payStart(orderFormNew);
         return result;
     }
