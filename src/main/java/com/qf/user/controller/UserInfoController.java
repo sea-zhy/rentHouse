@@ -89,7 +89,7 @@ public class UserInfoController {
 
     @RequestMapping(name = "getCode",value = "/getCode")
     @ResponseBody
-    public Object getCode(@RequestParam String email) throws Exception {
+    public Object getCode(@RequestParam String email,HttpSession session) throws Exception {
         System.err.println("email = " + email);
         Random random = new Random();
         int i = random.nextInt(9000)+1000;
